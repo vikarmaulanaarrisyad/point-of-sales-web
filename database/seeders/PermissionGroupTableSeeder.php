@@ -18,6 +18,12 @@ class PermissionGroupTableSeeder extends Seeder
                 'name' => 'Dashboard'
             ],
             [
+                'name' => 'Master Data'
+            ],
+            [
+                'name' => 'Jabatan'
+            ],
+            [
                 'name' => 'Konfigurasi'
             ],
             [

@@ -43,6 +43,28 @@
                     </li>
                 @endcan
 
+                @can('Master Data')
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>
+                                Master Data
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none">
+                            @can('Jabatan Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('jabatan.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Jabatan</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
+
                 @can('Konfigurasi Index')
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -91,6 +113,7 @@
                         </ul>
                     </li>
                 @endcan
+
                 @can('Pengaturan Index')
                     <li class="nav-item">
                         <a href="{{ route('setting.index') }}"

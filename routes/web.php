@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     DashboardController,
+    JabatanController,
     PermissionController,
     PermissionGroupController,
     RoleController,
@@ -75,5 +76,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/setting', 'index')->name('setting.index');
             Route::put('/setting/{setting}', 'update')->name('setting.update');
         });
+    });
+
+    Route::group(['middleware' => ['permission:Jabatan Index']], function () {
+        Route::get('/jabatan/data', [JabatanController::class, 'data'])->name('jabatan.data');
+        Route::resource('/jabatan', JabatanController::class);
     });
 });

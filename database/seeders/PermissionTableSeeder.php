@@ -19,6 +19,42 @@ class PermissionTableSeeder extends Seeder
                 'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
             ],
             [
+                'name' => 'Master Data',
+                'permission_group_id' => PermissionGroup::where('name', 'Master Data')->first()->id,
+            ],
+
+            // JABATAN
+            [
+                'name' => 'Jabatan Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Create',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+
+            // KONFIGURASI
+            [
                 'name' => 'Konfigurasi Index',
                 'permission_group_id' => PermissionGroup::where('name', 'Konfigurasi')->first()->id,
             ],
