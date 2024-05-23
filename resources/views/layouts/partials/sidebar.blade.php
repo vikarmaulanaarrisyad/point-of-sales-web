@@ -61,6 +61,14 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('Karyawan Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('karyawan.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Karyawan</p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcan

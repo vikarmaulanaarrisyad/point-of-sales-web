@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     DashboardController,
     JabatanController,
+    KaryawanController,
     PermissionController,
     PermissionGroupController,
     RoleController,
@@ -80,6 +81,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['permission:Jabatan Index']], function () {
         Route::get('/jabatan/data', [JabatanController::class, 'data'])->name('jabatan.data');
-        Route::resource('/jabatan', JabatanController::class);
+        Route::resource('/jabatan', JabatanController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Karyawan Index']], function () {
+        Route::get('/karyawan/data', [KaryawanController::class, 'data'])->name('karyawan.data');
+        Route::get('/karyawan/{karyawan}/detail', [KaryawanController::class, 'detail'])->name('karyawan.detail');
+        Route::resource('/karyawan', KaryawanController::class)->except('create', 'edit');
     });
 });
