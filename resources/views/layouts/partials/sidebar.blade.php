@@ -1,6 +1,6 @@
-<aside class="main-sidebar elevation-4 sidebar-light-info">
+<aside class="main-sidebar elevation-4 sidebar-light-danger">
     <!-- Brand Logo -->
-    <a href="{{ url('/') }}" class="brand-link">
+    <a href="{{ url('/') }}" class="brand-link bg-danger">
         <img src="{{ Storage::url($setting->path_image ?? '') }}" alt="Logo"
             class="brand-image img-circle elevation-3 bg-light" style="opacity: .8">
         <span class="brand-text font-weight-light">{{ $setting->company_name }}</span>
@@ -66,6 +66,14 @@
                                     <a href="{{ route('karyawan.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Karyawan</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('Satuan Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('satuan.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Satuan</p>
                                     </a>
                                 </li>
                             @endcan

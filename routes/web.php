@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     PermissionController,
     PermissionGroupController,
     RoleController,
+    SatuanController,
     SettingController,
     UserController
 };
@@ -88,5 +89,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/karyawan/data', [KaryawanController::class, 'data'])->name('karyawan.data');
         Route::get('/karyawan/{karyawan}/detail', [KaryawanController::class, 'detail'])->name('karyawan.detail');
         Route::resource('/karyawan', KaryawanController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Satuan Index']], function () {
+        Route::get('/satuan/data', [SatuanController::class, 'data'])->name('satuan.data');
+        Route::resource('/satuan', SatuanController::class)->except('create', 'edit');
     });
 });
