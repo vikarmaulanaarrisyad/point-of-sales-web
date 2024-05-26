@@ -12,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton('setting', function ($app) {
+            return Setting::first();
+        });
     }
 
     /**
@@ -21,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer('*', function ($view) {
-            $view->with('setting', Setting::first());
+            $setting = app('setting');
+            $view->with('setting', $setting);
         });
     }
 }

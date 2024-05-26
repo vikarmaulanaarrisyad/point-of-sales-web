@@ -23,36 +23,6 @@ class PermissionTableSeeder extends Seeder
                 'permission_group_id' => PermissionGroup::where('name', 'Master Data')->first()->id,
             ],
 
-            // JABATAN
-            [
-                'name' => 'Jabatan Index',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Store',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Create',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Edit',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Show',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Update',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-            [
-                'name' => 'Jabatan Delete',
-                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
-            ],
-
             // KONFIGURASI
             [
                 'name' => 'Konfigurasi Index',
@@ -154,10 +124,113 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Group Permission Delete',
                 'permission_group_id' => PermissionGroup::where('name', 'Group Permission')->first()->id,
             ],
+
+            [
+                'name' => 'Jabatan Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+            [
+                'name' => 'Jabatan Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Jabatan')->first()->id,
+            ],
+
+            [
+                'name' => 'Satuan Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+            [
+                'name' => 'Satuan Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+            [
+                'name' => 'Satuan Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+            [
+                'name' => 'Satuan Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+            [
+                'name' => 'Satuan Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+            [
+                'name' => 'Satuan Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Satuan')->first()->id,
+            ],
+
+            [
+                'name' => 'Produk Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+            [
+                'name' => 'Produk Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+            [
+                'name' => 'Produk Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+            [
+                'name' => 'Produk Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+            [
+                'name' => 'Produk Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+            [
+                'name' => 'Produk Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Produk')->first()->id,
+            ],
+
+            [
+                'name' => 'Kategori Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+            [
+                'name' => 'Kategori Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+            [
+                'name' => 'Kategori Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+            [
+                'name' => 'Kategori Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+            [
+                'name' => 'Kategori Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+            [
+                'name' => 'Kategori Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
+            ],
+
             [
                 'name' => 'Pengaturan Index',
                 'permission_group_id' => PermissionGroup::where('name', 'Pengaturan')->first()->id,
             ],
+
+
 
         ];
 

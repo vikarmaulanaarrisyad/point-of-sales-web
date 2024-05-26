@@ -69,11 +69,27 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('Kategori Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('category.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategori</p>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('Satuan Index')
                                 <li class="nav-item">
                                     <a href="{{ route('satuan.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Satuan</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('Produk Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('product.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Produk</p>
                                     </a>
                                 </li>
                             @endcan

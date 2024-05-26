@@ -112,4 +112,12 @@ class SatuanController extends Controller
 
         return response()->json(['message' => 'Data Berhasil Dihapus'], 200);
     }
+
+    public function search()
+    {
+        $keyword = request('keyword');
+
+        $result = Satuan::where('name', 'like', "%$keyword%")->get();
+        return $result;
+    }
 }

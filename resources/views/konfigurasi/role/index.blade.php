@@ -13,7 +13,7 @@
             <x-card>
                 @can('Role Store')
                     <x-slot name="header">
-                        <button onclick="addFormRole(`{{ route('role.store') }}`)" class="btn btn-sm btn-info"><i
+                        <button onclick="addFormRole(`{{ route('role.store') }}`)" class="btn btn-sm btn-primary"><i
                                 class="fas fa-plus-circle"></i>
                             Tambah Data</button>
                     </x-slot>

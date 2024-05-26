@@ -8,9 +8,8 @@
     <div class="row">
         <div class="col-md-12 col-12">
             <div class="form-group">
-                <label for="">Nama Group</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Nama Group"
-                    autocomplete="off">
+                <label for="name">Kategori</label>
+                <input type="text" class="form-control" name="name" id="name" autocomplete="off">
             </div>
         </div>
     </div>

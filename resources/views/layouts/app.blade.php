@@ -56,7 +56,7 @@
     @stack('css')
 </head>
 
-<body class="sidebar-mini layout-fixed layout-footer-fixed">
+<body class="sidebar-mini layout-fixed layout-footer-fixed layout-navbar-fixed">
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -145,12 +145,14 @@
 
     <!-- AdminLTE App -->
     <script src="{{ asset('AdminLTE/dist/js/adminlte.js?v=3.2.0') }}"></script>
-    <script src="{{ asset('AdminLTE/dist/js/pages/dashboard.js') }}"></script>
+    {{--  <script src="{{ asset('AdminLTE/dist/js/pages/dashboard.js') }}"></script>  --}}
 
     <script src="{{ asset('/js/custom.js') }}"></script>
 
     <x-toast />
     @stack('scripts')
+
+
 </body>
 
 </html>

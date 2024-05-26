@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\{
+    CategoryController,
     DashboardController,
     JabatanController,
     KaryawanController,
     PermissionController,
     PermissionGroupController,
+    ProductController,
     RoleController,
     SatuanController,
     SettingController,
@@ -93,6 +95,18 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['permission:Satuan Index']], function () {
         Route::get('/satuan/data', [SatuanController::class, 'data'])->name('satuan.data');
+        Route::get('/ajax/satuan/search', [SatuanController::class, 'search'])->name('satuan.search');
         Route::resource('/satuan', SatuanController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Kategori Index']], function () {
+        Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
+        Route::get('/ajax/category/search', [CategoryController::class, 'search'])->name('category.search');
+        Route::resource('/category', CategoryController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Produk Index']], function () {
+        Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
+        Route::resource('/product', ProductController::class)->except('create', 'edit');
     });
 });

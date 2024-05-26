@@ -15,7 +15,7 @@
                 @can('Group Permission Store')
                     <x-slot name="header">
                         <button onclick="addFormPermissionGroups(`{{ route('permissiongroups.store') }}`)"
-                            class="btn btn-sm btn-info"><i class="fas fa-plus-circle"></i>
+                            class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i>
                             Tambah Data</button>
                     </x-slot>
                 @endcan
