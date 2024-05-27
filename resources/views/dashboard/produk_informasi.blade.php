@@ -22,9 +22,10 @@
     <div class="col-md-6">
         <x-card>
             <x-slot name="header">
-                <h3 class="font-semibold text-gray-800 leading-tight">
+                <div class="alert alert-danger alert-dismissible">
+                    <h5><i class="icon fas fa-info"></i> Informasi!</h5>
                     Informasi Stok Produk kurang dari 10
-                </h3>
+                </div>
             </x-slot>
             <div class="card-body">
                 <ul>

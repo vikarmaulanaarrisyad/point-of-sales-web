@@ -12,7 +12,7 @@ class PenjualanDetailController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

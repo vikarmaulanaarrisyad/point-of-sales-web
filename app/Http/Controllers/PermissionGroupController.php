@@ -22,16 +22,17 @@ class PermissionGroupController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo('Group Permission Edit')) {
+                if ($user->can('Group Permission Edit')) {
                     $aksi .= '<button onclick="editDataPermissionGroups(`' . route('permissiongroups.edit', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>';
                 }
 
-                if (Auth::user()->hasPermissionTo('Group Permission Show')) {
+                if ($user->can('Group Permission Show')) {
                     $aksi .= '<button onclick="detailDataPermissionGroups(`' . route('permissiongroups.detail', $query->id) . '`)" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>';
                 }
 
-                if (Auth::user()->hasPermissionTo('Group Permission Delete')) {
+                if ($user->can('Group Permission Delete')) {
                     $aksi .= '<button onclick="deleteDataPermissionGroups(`' . route('permissiongroups.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>';
                 }
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\{
     DashboardController,
     JabatanController,
     KaryawanController,
+    PelangganController,
+    PenjualanDetailController,
     PermissionController,
     PermissionGroupController,
     ProductController,
@@ -108,5 +110,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['permission:Produk Index']], function () {
         Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
         Route::resource('/product', ProductController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Pelanggan Index']], function () {
+        Route::get('/pelanggan/data', [PelangganController::class, 'data'])->name('pelanggan.data');
+        Route::resource('/pelanggan', PelangganController::class)->except('create', 'edit');
     });
 });

@@ -26,14 +26,15 @@ class JabatanController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo("Jabatan Edit")) {
+                if ($user->can("Jabatan Edit")) {
                     $aksi .= '
                         <button onclick="editForm(`' . route('jabatan.show', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>
 
                     ';
                 }
-                if (Auth::user()->hasPermissionTo("Jabatan Delete")) {
+                if ($user->can("Jabatan Delete")) {
                     $aksi .= '
                         <button onclick="deleteData(`' . route('jabatan.destroy', $query->id) . '`, `' . $query->jabatan . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                     ';

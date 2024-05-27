@@ -230,6 +230,35 @@ class PermissionTableSeeder extends Seeder
             ],
 
             [
+                'name' => 'Pelanggan Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Detail',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+            [
+                'name' => 'Pelanggan Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Pelanggan')->first()->id,
+            ],
+
+            [
                 'name' => 'Kategori Index',
                 'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
             ],

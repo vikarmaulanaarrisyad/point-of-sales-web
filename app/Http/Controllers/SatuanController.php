@@ -26,14 +26,14 @@ class SatuanController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($query) {
                 $aksi = '';
-
-                if (Auth::user()->hasPermissionTo("Satuan Edit")) {
+                $user = Auth::user();
+                if ($user->can("Satuan Edit")) {
                     $aksi .= '
                         <button onclick="editForm(`' . route('satuan.show', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>
 
                     ';
                 }
-                if (Auth::user()->hasPermissionTo("Satuan Delete")) {
+                if ($user->can("Satuan Delete")) {
                     $aksi .= '
                         <button onclick="deleteData(`' . route('satuan.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                     ';

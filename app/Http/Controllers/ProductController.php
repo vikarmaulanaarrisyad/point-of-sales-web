@@ -38,13 +38,14 @@ class ProductController extends Controller
             })
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo("Produk Edit")) {
+                if ($user->can("Produk Edit")) {
                     $aksi .= '
                         <button onclick="editForm(`' . route('product.show', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>
                     ';
                 }
-                if (Auth::user()->hasPermissionTo("Produk Delete")) {
+                if ($user->can("Produk Delete")) {
                     $aksi .= '
                         <button onclick="deleteData(`' . route('product.destroy', $query->id) . '`, `' . $query->nama_produk . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                     ';

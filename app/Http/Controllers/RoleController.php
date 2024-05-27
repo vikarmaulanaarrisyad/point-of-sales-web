@@ -27,16 +27,17 @@ class RoleController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo('Role Show')) {
+                if ($user->can('Role Show')) {
                     $aksi .= '<button onclick="detailDataRole(`' . route('role.detail', $query->id) . '`)" class="btn btn-sm mr-1 btn-info"><i class="fas fa-eye"></i></button>';
                 }
 
-                if (Auth::user()->hasPermissionTo('Role Edit')) {
+                if ($user->can('Role Edit')) {
                     $aksi .= '<button onclick="editDataRole(`' . route('role.edit', $query->id) . '`)" class="btn btn-sm mr-1 btn-primary"><i class="fas fa-pencil-alt"></i></button>';
                 }
 
-                if (Auth::user()->hasPermissionTo('Role Delete')) {
+                if ($user->can('Role Delete')) {
                     $aksi .= '<button onclick="deleteDataRole(`' . route('role.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>';
                 }
 

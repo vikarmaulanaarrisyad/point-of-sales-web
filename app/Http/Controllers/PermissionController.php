@@ -28,20 +28,21 @@ class PermissionController extends Controller
             })
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo('Permission Show')) {
+                if ($user->can('Permission Show')) {
                     $aksi .= '
                     <button onclick="detailDataPermission(`' . route('permission.detail', $query->id) . '`)" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
                     ';
                 }
 
-                if (Auth::user()->hasPermissionTo('Permission Edit')) {
+                if ($user->can('Permission Edit')) {
                     $aksi .= '
                     <button onclick="editDataPermission(`' . route('permission.edit', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>
                     ';
                 }
 
-                if (Auth::user()->hasPermissionTo('Permission Delete')) {
+                if ($user->can('Permission Delete')) {
                     $aksi .= '
                     <button onclick="deleteDataPermission(`' . route('permission.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                     ';

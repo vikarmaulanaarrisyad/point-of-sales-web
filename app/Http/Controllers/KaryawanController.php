@@ -49,20 +49,21 @@ class KaryawanController extends Controller
             })
             ->addColumn('action', function ($query) {
                 $aksi = '';
+                $user = Auth::user();
 
-                if (Auth::user()->hasPermissionTo("Karyawan Detail")) {
+                if ($user->can("Karyawan Detail")) {
                     $aksi .= '
                         <a href="' . route('karyawan.detail', $query->id) . '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                     ';
                 }
 
-                if (Auth::user()->hasPermissionTo("Karyawan Edit")) {
+                if ($user->can("Karyawan Edit")) {
                     $aksi .= '
                         <button onclick="editForm(`' . route('karyawan.show', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>
                     ';
                 }
 
-                if (Auth::user()->hasPermissionTo("Karyawan Delete")) {
+                if ($user->can("Karyawan Delete")) {
                     $aksi .= '
                         <button onclick="deleteData(`' . route('karyawan.destroy', $query->id) . '`, `' . $query->nama_karyawan . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                     ';
