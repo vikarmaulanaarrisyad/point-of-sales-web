@@ -201,6 +201,35 @@ class PermissionTableSeeder extends Seeder
             ],
 
             [
+                'name' => 'Karyawan Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Detail',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+            [
+                'name' => 'Karyawan Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Karyawan')->first()->id,
+            ],
+
+            [
                 'name' => 'Kategori Index',
                 'permission_group_id' => PermissionGroup::where('name', 'Kategori')->first()->id,
             ],

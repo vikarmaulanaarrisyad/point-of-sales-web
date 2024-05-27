@@ -9,4 +9,6 @@
 
 @section('content')
     @includeIf('dashboard.small_box')
+    @include('dashboard.produk_informasi')
+    {{--  @include('dashboard.grafik_chart')  --}}
 @endsection
