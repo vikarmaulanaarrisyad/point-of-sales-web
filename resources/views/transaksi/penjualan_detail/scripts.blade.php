@@ -164,15 +164,6 @@
                 });
         });
 
-
-        $(document).on('input', '#diskon', function() {
-            if ($(this).val() == "") {
-                $(this).val(0).select();
-            }
-
-            loadForm($(this).val());
-        });
-
         $('#diterima').on('input', function() {
             // Mengonversi nilai menjadi angka untuk memastikan perbandingan numerik yang benar
             var jumlahDiterima = $(this).val().replace(/[^\d]/g, '');
@@ -214,22 +205,16 @@
                     sortable: false
                 },
                 {
-                    data: 'kode_produk',
+                    data: 'barcode',
                 },
                 {
                     data: 'nama_produk',
-                },
-                {
-                    data: 'harga_awal',
                 },
                 {
                     data: 'harga_jual',
                 },
                 {
                     data: 'jumlah',
-                },
-                {
-                    data: 'diskon',
                 },
                 {
                     data: 'subtotal',
