@@ -57,7 +57,7 @@
                                             <label for="customCheck1" class="custom-control-label" id="showPassword">Show
                                                 Password</label>
                                         </div>
-                                        <a href="#" class="small mt-1 text-muted">Lupa Password?</a>
+                                        {{--  <a href="#" class="small mt-1 text-muted">Lupa Password?</a>  --}}
                                     </div>
 
                                     <div>
