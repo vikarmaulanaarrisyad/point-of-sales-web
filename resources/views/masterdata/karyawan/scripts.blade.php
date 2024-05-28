@@ -12,7 +12,7 @@
         });
 
         table = $('#karyawan').DataTable({
-            processing: false,
+            processing: true,
             serverSide: true,
             autoWidth: false,
             responsive: true,
