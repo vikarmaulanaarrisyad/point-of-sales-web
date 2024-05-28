@@ -69,7 +69,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="text-center mt-3">
+                                    <div class="text-center mt-3" style="none">
                                         <div class="text-muted">
                                             Jika belum punya akun silahkan registrasi
                                             <a href="{{ route('register') }}" class="text-muted">disini</a>

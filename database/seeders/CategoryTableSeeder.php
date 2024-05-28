@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Jabatan;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class JabatanTableSeeder extends Seeder
+class CategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Jabatan::updateOrCreate(
-            ['jabatan' => 'Karyawan'],
-            ['jabatan' => 'Karyawan', 'slug' => 'karyawan']
+        Category::updateOrCreate(
+            ['id' => 1],
+            ['name' => 'Makanan', 'slug' => 'makanan']
         );
     }
 }

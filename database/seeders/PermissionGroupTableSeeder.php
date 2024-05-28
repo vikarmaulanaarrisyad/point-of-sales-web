@@ -42,6 +42,9 @@ class PermissionGroupTableSeeder extends Seeder
                 'name' => 'Penjualan'
             ],
             [
+                'name' => 'Transaksi'
+            ],
+            [
                 'name' => 'Konfigurasi'
             ],
             [

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PenjualanDetail extends Model
 {
     use HasFactory;
+
+    public function produk()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     JabatanController,
     KaryawanController,
     PelangganController,
+    PenjualanController,
     PenjualanDetailController,
     PermissionController,
     PermissionGroupController,
@@ -115,5 +116,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['permission:Pelanggan Index']], function () {
         Route::get('/pelanggan/data', [PelangganController::class, 'data'])->name('pelanggan.data');
         Route::resource('/pelanggan', PelangganController::class)->except('create', 'edit');
+    });
+
+    Route::group(['middleware' => ['permission:Transaksi Index']], function () {
+        Route::get('/transaksi/baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
+        Route::get('/transaksi/produk/data', [PenjualanDetailController::class, 'produk'])->name('penjualan_detail.produk');
+        Route::get('/transaksi/pelanggan/data', [PenjualanDetailController::class, 'pelanggan'])->name('transaksi.pelanggan');
+        Route::get('/transaksi/{id}/data', [PenjualanDetailController::class, 'data'])->name('transaksi.data');
+        Route::post('/transaksi/simpan', [PenjualanController::class, 'store'])->name('transaksi.simpan');
+        Route::resource('/transaksi', PenjualanDetailController::class)->except('show');
     });
 });

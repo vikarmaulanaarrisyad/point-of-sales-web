@@ -284,6 +284,31 @@ class PermissionTableSeeder extends Seeder
             ],
 
             [
+                'name' => 'Transaksi Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
+                'name' => 'Transaksi Store',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
+                'name' => 'Transaksi Show',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
+                'name' => 'Transaksi Edit',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
+                'name' => 'Transaksi Update',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
+                'name' => 'Transaksi Delete',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+
+            [
                 'name' => 'Pengaturan Index',
                 'permission_group_id' => PermissionGroup::where('name', 'Pengaturan')->first()->id,
             ],

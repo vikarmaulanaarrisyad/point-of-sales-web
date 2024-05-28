@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenjualanController extends Controller
 {
@@ -20,7 +21,24 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        //
+        $karyawan = auth()->user()->karyawan->id ?? 2;
+
+        $penjualan = new Penjualan();
+        $penjualan->karyawan_id = $karyawan ?? 2;
+        $penjualan->pelanggan_id = null;
+        $penjualan->kode_penjualan = 'PJ-' . date('Ymd') . '-' . str_pad(Penjualan::count() + 1, 4, '0', STR_PAD_LEFT);
+        $penjualan->total_item = 0;
+        $penjualan->total_harga = 0;
+        $penjualan->total_bayar = 0;
+        $penjualan->total_kembalian = 0;
+        $penjualan->bukti_bayar = null;
+        $penjualan->catatan = null;
+        $penjualan->status_bayar = 'pending';
+        $penjualan->save();
+
+        session(['penjualan_id' => $penjualan->id]);
+
+        return redirect()->route('transaksi.index');
     }
 
     /**

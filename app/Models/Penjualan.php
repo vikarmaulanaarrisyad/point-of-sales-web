@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Penjualan extends Model
 {
     use HasFactory;
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id', 'id');
+    }
 }
