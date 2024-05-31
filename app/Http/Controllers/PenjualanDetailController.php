@@ -188,7 +188,7 @@ class PenjualanDetailController extends Controller
 
     public function loadForm($total, $diterima)
     {
-        $bayar = $total;    
+        $bayar = $total;
         $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
         $data  = [
             'diterima' => $diterima,
@@ -197,6 +197,7 @@ class PenjualanDetailController extends Controller
             'bayarrp' => format_uang($bayar),
             'terbilang' => ucwords(terbilang($bayar) . ' Rupiah'),
             'kembalirp' => format_uang($kembali),
+            'kembali_terbilang' => ucwords(terbilang($kembali) . ' Rupiah'),
         ];
 
         return response()->json($data);
