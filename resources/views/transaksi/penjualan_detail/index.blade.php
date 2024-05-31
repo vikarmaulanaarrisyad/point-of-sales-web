@@ -42,21 +42,20 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <x-card>
-
                 <form class="form-produk">
                     @csrf
                     <div class="form-group row">
-                        <label for="nama_produk" class="col-lg-2">Nama Produk</label>
+                        <label for="barcode" class="col-lg-2">Nama Produk</label>
                         <div class="col-lg-4">
                             <div class="input-group">
                                 <input type="hidden" name="penjualan_id" id="penjualan_id" value="{{ $penjualan->id }}">
-                                <input type="hidden" name="produk_id" id="produk_id">
-                                <input type="hidden" name="stok" id="stok" value="{{ $stok }}">
+                                <input type="hidden" name="product_id" id="product_id">
 
-                                <input id="nama_produk" class="form-control" type="text" name="">
+                                <input id="barcode" class="form-control" type="text" name="barcode">
+                                
                                 <div class="input-group-append">
-                                    <button onclick="tampilProduk()" class="btn btn-info btn-flat" type="button"
-                                        id="button-addon2"><i class="fas fa-arrow-right"></i></button>
+                                    <button onclick="tampilProduk()" class="btn btn-info btn-flat" type="button"><i
+                                            class="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -68,13 +67,12 @@
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Harga Lama</th>
-                        <th>Harga Baru</th>
+                        <th>Harga</th>
                         <th width="14%">Jumlah</th>
-                        <th>Diskon</th>
                         <th>Subtotal</th>
                         <th>Aksi</th>
                     </x-slot>
+
                 </x-table>
 
                 <div class="row">
@@ -98,23 +96,23 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="kode_member" class="col-lg-2 col-md-2 col-2 control-label">Member</label>
+                                <label for="nama_toko" class="col-lg-2 col-md-2 col-2 control-label">Nama Toko</label>
                                 <div class="col-lg-8 col-md-8">
                                     <div class="input-group">
-                                        <input id="kode_member" class="form-control" type="text"
-                                            value="{{ $memberSelected->kode_member }}">
+                                        <input id="nama_toko" class="form-control" type="text"
+                                            value="{{ $memberSelected->nama_toko }}">
                                         <div class="input-group-append" id="tambahPelanggan">
                                             <button onclick="tambahPelanggan('{{ route('pelanggan.store') }}')"
-                                                class="btn btn-info btn-flat" type="button" id="button-addon2"><i
+                                                class="btn btn-info btn-flat" type="button"><i
                                                     class="fas fa-plus"></i></button>
                                         </div>
                                         <div class="input-group-append">
-                                            <button onclick="tampilMember()" class="btn btn-info btn-flat" type="button"
-                                                id="button-addon2"><i class="fas fa-arrow-right"></i></button>
+                                            <button onclick="tampilPelanggan()" class="btn btn-info btn-flat"
+                                                type="button"><i class="fas fa-arrow-right"></i></button>
                                         </div>
                                         <div class="input-group-append">
-                                            <button onclick="resetMember()" class="btn btn-info btn-flat" type="button"
-                                                id="button-addon2"><i class="fas fa-sync-alt"></i></button>
+                                            <button onclick="resetPelanggan()" class="btn btn-info btn-flat"
+                                                type="button"><i class="fas fa-sync-alt"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -134,13 +132,6 @@
                                         onkeyup="format_uang(this)">
                                 </div>
                             </div>
-                            <div class="form-group row" id="form-dp">
-                                <label for="dp" class="col-lg-2 control-label">DP</label>
-                                <div class="col-lg-8">
-                                    <input type="text" id="dp" class="form-control" autocomplete="off"
-                                        name="dp" value="0" onkeyup="format_uang(this)">
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="kembali" class="col-lg-2 control-label">Kembali</label>
                                 <div class="col-lg-8">
@@ -148,23 +139,21 @@
                                         autocomplete="off" value="0" readonly disabled>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
 
                 <x-slot name="footer">
                     <button type="submit" class="btn btn-primary btn-flat float-right btn-simpan"><i
-                            class="fas fa-save"></i> Simpan
-                        Transaksi</button>
+                            class="fas fa-save"></i> Simpan Transaksi</button>
                 </x-slot>
 
             </x-card>
         </div>
     </div>
-    @includeIf('admin.penjualan_detail.produk')
-    @includeIf('admin.penjualan_detail.member')
-    @includeIf('admin.penjualan_detail.formTambahMember')
+    @include('transaksi.penjualan_detail.produk')
+    {{--  @include('transaksi.penjualan_detail.member')  --}}
+    {{--  @include('transaksi.penjualan_detail.formTambahMember')  --}}
 @endsection
 
 @include('includes.datatable')

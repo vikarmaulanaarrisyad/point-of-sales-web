@@ -108,7 +108,7 @@
                 {{--  @can('Transaksi Index')  --}}
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="fa fa-upload nav-icon"></i>
                         <p>
                             Penjualan

@@ -13,43 +13,13 @@
             $('#nama_toko').prop('disabled', true);
             $('.btn-simpan').prop('disabled', true);
             $('#tambahPelanggan').hide();
-            $('#form-dp').hide();
-
-            $('input[name="status"]').change(function() {
-                if ($(this).val() == "Cash") {
-                    $('#tambahPelanggan').hide();
-                    $('.btn-simpan').prop('disabled', true);
-                    $('#form-dp').hide();
-                    $('#form-diterima').show();
-                } else {
-                    $('#tambahPelanggan').show();
-                    $('#form-diterima').hide();
-                    $('#form-dp').show();
-                    $('.btn-simpan').prop('disabled', false);
-                }
-            });
         });
 
         $(document).on('input', '.quantity', function() {
             let id = $(this).data('id');
-            let jumlah = parseInt($(this).val());
-            let harga_jual = $('#harga_jual').val();
-            harga_jual = harga_jual.replace('.', '');
+            let quantity = parseInt($(this).val());
 
-            if (harga_jual < 1) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps! Gagal',
-                    text: 'Harga baru tidak boleh kurang dari 0',
-                    showConfirmButton: false,
-                    timer: 3000
-                }).then(() => {
-                    harga_beli.val();
-                });
-                return;
-            }
-
-            if (jumlah < 1) {
+            if (quantity < 1) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Opps! Gagal',
@@ -62,7 +32,7 @@
                 return;
             }
 
-            if (jumlah > 10000) {
+            if (quantity > 10000) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Opps! Gagal',
@@ -77,79 +47,12 @@
             $.post(`{{ url('transaksi') }}/${id} `, {
                     _method: 'PUT',
                     _token: '{{ csrf_token() }}',
-                    jumlah,
-                    harga_jual
+                    quantity,
                 })
                 .done(response => {
                     table1.ajax.reload();
                     table2.ajax.reload();
-                })
-                .fail(errors => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Opps! Gagal',
-                        text: errors.responseJSON.message ?? 'Tidak dapat menyimpan data ke server',
-                        showConfirmButton: false,
-                        timer: 3000,
-                    }).then(() => {
-                        $(this).val(1);
-                    });
-                });
-        });
-
-        $(document).on('change', '.harga_jual', function() {
-            let id = $(this).data('id');
-            let jumlah = $('.quantity').val();
-            let harga_jual = $('#harga_jual').val();
-            harga_jual = harga_jual.replace('.', '');
-
-            if (harga_jual < 1) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps! Gagal',
-                    text: 'Harga baru tidak boleh kurang dari 0',
-                    showConfirmButton: false,
-                    timer: 3000
-                }).then(() => {
-                    harga_beli.val();
-                });
-                return;
-            }
-
-            if (jumlah < 1) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps! Gagal',
-                    text: 'Jumlah tidak boleh kurang dari 1',
-                    showConfirmButton: false,
-                    timer: 3000
-                }).then(() => {
-                    $(this).val(1);
-                });
-                return;
-            }
-
-            if (jumlah > 10000) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps! Gagal',
-                    text: 'Jumlah tidak boleh melebihi 10000',
-                    showConfirmButton: false,
-                    timer: 3000
-                }).then(() => {
-                    $(this).val(10000);
-                });
-                return;
-            }
-            $.post(`{{ url('transaksi') }}/${id} `, {
-                    _method: 'PUT',
-                    _token: '{{ csrf_token() }}',
-                    jumlah,
-                    harga_jual
-                })
-                .done(response => {
-                    table1.ajax.reload();
-                    table2.ajax.reload();
+                    table3.ajax.reload();
                 })
                 .fail(errors => {
                     Swal.fire({
@@ -176,7 +79,7 @@
                 $('.btn-simpan').prop('disabled', false);
             }
 
-            loadForm($('#diskon').val(), jumlahDiterima);
+            loadForm(jumlahDiterima);
         }).focus(function() {
             $(this).select();
         });
@@ -214,7 +117,7 @@
                     data: 'harga_jual',
                 },
                 {
-                    data: 'jumlah',
+                    data: 'quantity',
                 },
                 {
                     data: 'subtotal',
@@ -228,7 +131,6 @@
             dom: 'Brt',
             bSort: false,
         }).on('draw.dt', function() {
-            loadForm($('#diskon').val());
             setTimeout(() => {
                 $('#diterima').trigger('input');
             }, 300);
@@ -268,45 +170,6 @@
             dom: 'Brt',
             bSort: false,
         });
-
-        table3 = $('.table-pelanggan').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            responsive: true,
-            language: {
-                "processing": "Mohon bersabar..."
-            },
-            ajax: {
-                url: '{{ route('transaksi.pelanggan') }}',
-            },
-            columns: [{
-                    data: 'DT_RowIndex',
-                    searchable: false,
-                    sortable: false
-                },
-                {
-                    data: 'nama_toko',
-                    sortable: false,
-                },
-                {
-                    data: 'nama_pemilik',
-                },
-                {
-                    data: 'alamat',
-                },
-                {
-                    data: 'nomor_hp',
-                },
-                {
-                    data: 'aksi',
-                    sortable: false,
-                    searchable: false
-                },
-            ],
-            dom: 'Brt',
-            bSort: false,
-        });
     </script>
 
     <script>
@@ -316,7 +179,7 @@
         }
 
         function pilihProduk(id, nama) {
-            $('#produk_id').val(id);
+            $('#product_id').val(id);
             $('#nama_produk').val(nama);
             hideProduk();
             tambahProduk(nama);
@@ -329,12 +192,14 @@
                     if (response.status = 200) {
                         table1.ajax.reload();
                         table2.ajax.reload();
+                        table3.ajax.reload();
                         $('#nama_produk').focus();
                     }
                 })
                 .fail(errors => {
                     table1.ajax.reload();
                     table2.ajax.reload();
+                    table3.ajax.reload();
                     Swal.fire({
                         icon: 'error',
                         title: 'Opps! Gagal',
@@ -360,89 +225,6 @@
 
         function hideProduk() {
             $(modal).modal('hide');
-        }
-
-        function tambahPelanggan(url, title = 'Pilih Pelanggan') {
-            $(modalTambahPelanggan).modal('show');
-            $(`${modalTambahPelanggan} .modal-title`).text(title);
-            $(`${modalTambahPelanggan} form`).attr('action', url);
-            $(`${modalTambahPelanggan} [name=_method]`).val('POST');
-            $('#spinner-border').hide();
-
-            $(button).show();
-            $(button).prop('disabled', false);
-
-            resetForm(`${modal} form`);
-        }
-
-        function submitForm(originalForm) {
-            $(button).prop('disabled', true);
-            $('#spinner-border').show();
-
-            $.post({
-                    url: $(originalForm).attr('action'),
-                    data: new FormData(originalForm),
-                    dataType: 'JSON',
-                    contentType: false,
-                    cache: false,
-                    processData: false
-                })
-                .done(response => {
-                    $(modalTambahPelanggan).modal('hide');
-                    if (response.status = 200) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 3000
-                        }).then(() => {
-                            $(button).prop('disabled', false);
-                            $('#spinner-border').hide();
-
-                            table3.ajax.reload();
-                        })
-                    }
-                })
-                .fail(errors => {
-                    $('#spinner-border').hide();
-                    $(button).prop('disabled', false);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Opps! Gagal',
-                        text: errors.responseJSON.message,
-                        showConfirmButton: true,
-                    });
-                    if (errors.status == 422) {
-                        $('#spinner-border').hide()
-                        $(button).prop('disabled', false);
-                        loopErrors(errors.responseJSON.errors);
-                        return;
-                    }
-                });
-        }
-
-        function tampilPelanggan(title = 'Pilih Pelanggan') {
-            $(modalPelanggan).modal('show');
-            $(`${modalPelanggan} .modal-title`).text(title);
-        }
-
-        function resetMember() {
-            $('#member').val('');
-            $('#nama_toko').val('');
-            $('#diterima').val(0).focus().select();
-            hidePelanggan();
-        }
-
-        function pilihPelanggan(id, kode) {
-            $('#member').val(id);
-            $('#kode_member').val(kode);
-            $('#diterima').val(0).focus().select();
-            hidePelanggan();
-        }
-
-        function hidePelanggan() {
-            $(modalMember).modal('hide');
         }
 
         function deleteData(url, name) {
@@ -480,6 +262,7 @@
                                 }).then(() => {
                                     table1.ajax.reload();
                                     table2.ajax.reload();
+                                    table3.ajax.reload();
                                 })
                             }
                         },
@@ -494,6 +277,7 @@
                                 // Refresh tabel atau lakukan operasi lain yang diperlukan
                                 table1.ajax.reload();
                                 table2.ajax.reload();
+                                table3.ajax.reload();
                             });
                         }
                     });
@@ -503,11 +287,11 @@
     </script>
 
     <script>
-        function loadForm(diskon, diterima = 0) {
+        function loadForm(diterima = 0) {
             $('#total').val($('.total').text());
             $('#total_item').val($('.total_item').text());
 
-            $.get(`{{ url('transaksi/loadform') }}/${diskon}/${$('#total').val()}/${diterima}`)
+            $.get(`{{ url('transaksi/loadform') }}/${$('#total').val()}/${diterima}`)
                 .done(response => {
                     $('#totalrp').val('Rp. ' + response.totalrp);
                     $('#bayarrp').val('Rp. ' + response.bayarrp);
@@ -516,6 +300,7 @@
                     $('.tampil-terbilang').text(response.terbilang)
 
                     $('#kembali').val('Rp. ' + response.kembalirp);
+                    
                     if ($('#diterima').val() != 0) {
                         $('.tampil-bayar').text('Kembali: Rp. ' + response.kembalirp);
                         $('.tampil-terbilang').text(response.kembali_terbilang);

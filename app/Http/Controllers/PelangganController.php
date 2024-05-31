@@ -79,7 +79,7 @@ class PelangganController extends Controller
             'nama_pemilik'   => $request->nama_pemilik,
             'nomor_hp'   => $request->nomor_hp,
             'alamat'   => $request->alamat,
-            'karyawan_id'   => Auth::user()->karyawan->id,
+            'karyawan_id'   => Auth::user()->karyawan->id ?? Null,
         ];
 
         Pelanggan::create($data);

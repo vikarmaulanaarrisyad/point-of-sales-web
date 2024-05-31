@@ -21,10 +21,10 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        $karyawan = auth()->user()->karyawan->id ?? 2;
+        $karyawan = auth()->user()->karyawan->id ?? 1;
 
         $penjualan = new Penjualan();
-        $penjualan->karyawan_id = $karyawan ?? 2;
+        $penjualan->karyawan_id = $karyawan ?? 1;
         $penjualan->pelanggan_id = null;
         $penjualan->kode_penjualan = 'PJ-' . date('Ymd') . '-' . str_pad(Penjualan::count() + 1, 4, '0', STR_PAD_LEFT);
         $penjualan->total_item = 0;
@@ -35,8 +35,6 @@ class PenjualanController extends Controller
         $penjualan->catatan = null;
         $penjualan->status_bayar = 'pending';
         $penjualan->save();
-
-        session(['penjualan_id' => $penjualan->id]);
 
         return redirect()->route('transaksi.index');
     }

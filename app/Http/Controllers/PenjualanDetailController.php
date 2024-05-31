@@ -20,10 +20,6 @@ class PenjualanDetailController extends Controller
         $pelanggan  = Pelanggan::orderBy('nama_toko')->get();
         $penjualan  = Penjualan::orderBy('created_at', 'desc')
             ->where('karyawan_id', 1)->first();
-        $stok   = PenjualanDetail::where('penjualan_id', $penjualan->id)
-            ->whereHas('produk', function ($q) {
-                return $q->where('stok', '>', 0);
-            })->first();
 
         // cek apakah ada transaksi yang sedang berjalan
         if (!$penjualan) {
@@ -34,7 +30,7 @@ class PenjualanDetailController extends Controller
             }
         } else {
             $memberSelected = $penjualan->pelanggan ?? new Pelanggan();
-            return view('transaksi.penjualan_detail.index', compact('pelanggan', 'produk', 'memberSelected', 'penjualan', 'stok'));
+            return view('transaksi.penjualan_detail.index', compact('pelanggan', 'produk', 'memberSelected', 'penjualan'));
         }
     }
 
@@ -49,10 +45,8 @@ class PenjualanDetailController extends Controller
             $row = [];
             $row['barcode'] = '<span class="badge badge-info">' . $item->produk['barcode'] . '</span>';
             $row['nama_produk'] = $item->produk['nama_produk'];
-
-            $row['harga_beli']  = 'Rp. ' . format_uang($item->produk->pembelianDetail);
-            $row['harga_jual']  = '<input id="harga_jual" onkeyup="format_uang(this)" type="text" name="harga_jual" data-id="' . $item->id . '"  class="form-control input-sm harga_jual" value="' . format_uang($item->harga_jual) . '">';
-            $row['jumlah']      = '<input type="number" name="jumlah" class="form-control input-sm quantity" data-id="' . $item->id . '"  min="1" value="' . $item->jumlah . '"">';
+            $row['harga_jual'] =  format_uang($item->produk['harga_jual']);
+            $row['quantity']      = '<input type="number" name="quantity" class="form-control input-sm quantity" data-id="' . $item->id . '"  min="1" value="' . $item->quantity . '"">';
 
             $row['subtotal']    = 'Rp. ' . format_uang($item->subtotal);
             $row['aksi']        = '
@@ -61,8 +55,8 @@ class PenjualanDetailController extends Controller
 
             $data[] = $row;
 
-            $total += $item->harga_jual * $item->jumlah;
-            $total_item += $item->jumlah;
+            $total += $item->price * $item->quantity;
+            $total_item += $item->quantity;
         }
 
         $data[] = [
@@ -72,7 +66,7 @@ class PenjualanDetailController extends Controller
                 <div class="total_item hide">' . $total_item . '</div>
             ',
             'harga_jual' => '',
-            'jumlah' => '',
+            'quantity' => '',
             'subtotal' => '',
             'aksi' => '',
         ];
@@ -83,67 +77,70 @@ class PenjualanDetailController extends Controller
             ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // buat session baru
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $produk = Product::where('id', $request->produk_id)->first();
+        $produk = Product::where('id', $request->product_id)->first();
+
         if (!$produk) {
             return response()->json(['error' => 'Produk tidak ditemukan'], 422);
         }
 
+        // Cek apakah product_id sudah ada di tabel penjualan_details
+        $existingDetail = PenjualanDetail::where('product_id', $request->product_id)
+            ->where('penjualan_id', $request->penjualan_id)
+            ->first();
+
+        if ($existingDetail) {
+            // Tambah quantity dan update subtotal
+            $existingDetail->quantity += 1;
+            $existingDetail->subtotal = $existingDetail->quantity * $produk->harga_jual;
+            $existingDetail->save();
+
+            return response()->json(['message' => 'Quantity produk berhasil ditambah'], 200);
+        }
+
+        // Jika produk belum ada di detail, buat detail baru
         $detail = new PenjualanDetail();
-        $detail->penjualan_id   = $request->penjualan_id;
-        $detail->produk_id      = $request->produk_id;
-        $detail->harga_awal     = $produk->harga_jual;
-        $detail->harga_jual     = $produk->harga_jual;
-        $detail->quantity         = 1;
-        $detail->price         = 0;
-        $detail->subtotal       = $produk->harga_jual;
+        $detail->penjualan_id = $request->penjualan_id;
+        $detail->product_id = $request->product_id;
+        $detail->quantity = 1;
+        $detail->price = $produk->harga_jual;
+        $detail->subtotal = $produk->harga_jual;
         $detail->save();
 
         return response()->json(['message' => 'Transaksi penjualan berhasil disimpan'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PenjualanDetail $penjualanDetail)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PenjualanDetail $penjualanDetail)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PenjualanDetail $penjualanDetail)
+    public function update(Request $request, $id)
     {
-        //
+        $detail = PenjualanDetail::findOrFail($id);
+        $stok = $detail->produk->stok;
+        if ($stok < $request->quantity) {
+            return response()->json(['message' => 'Jumlah melebihi stok maksimal ' . $stok], 422);
+        }
+        $detail->quantity = $request->quantity;
+        $detail->subtotal = $detail->produk->harga_jual * $request->quantity;
+        $detail->update();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PenjualanDetail $penjualanDetail)
+    public function destroy($id)
     {
-        //
+        $detail = PenjualanDetail::find($id);
+        $detail->delete();
+
+        return response()->json(['message' => 'Transaksi penjualan berhasil dihapus'], 200);
     }
 
     public function produk()
@@ -187,5 +184,21 @@ class PenjualanDetailController extends Controller
             })
             ->escapeColumns([])
             ->make(true);
+    }
+
+    public function loadForm($total, $diterima)
+    {
+        $bayar = $total;    
+        $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
+        $data  = [
+            'diterima' => $diterima,
+            'totalrp' => format_uang($total),
+            'bayar'   => $bayar,
+            'bayarrp' => format_uang($bayar),
+            'terbilang' => ucwords(terbilang($bayar) . ' Rupiah'),
+            'kembalirp' => format_uang($kembali),
+        ];
+
+        return response()->json($data);
     }
 }
