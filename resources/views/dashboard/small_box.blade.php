@@ -1,6 +1,6 @@
  <div class="row">
 
-     @can('Dashboard Total Produk')
+     @can('Total Produk')
          <div class="col-lg-3 col-6">
 
              <div class="small-box bg-info">
@@ -17,7 +17,7 @@
          </div>
      @endcan
 
-     @can('Dashboard Total Kategori')
+     @can('Total Kategori')
          <div class="col-lg-3 col-6">
 
              <div class="small-box bg-success">
@@ -34,7 +34,7 @@
          </div>
      @endcan
 
-     @can('Dashboard Total Pelanggan')
+     @can('Total Pelanggan')
          <div class="col-lg-3 col-6">
              <div class="small-box bg-warning">
                  <div class="inner">
@@ -49,7 +49,7 @@
          </div>
      @endcan
 
-     @can('Dashboard Total Karyawan')
+     @can('Total Karyawan')
          <div class="col-lg-3 col-6">
 
              <div class="small-box bg-danger">

@@ -1,6 +1,6 @@
 <div class="row">
     <!-- Kolom Kiri -->
-    @can('Dashboard Produk Terbaru')
+    @can('Produk Terbaru')
         <div class="col-md-6">
             <x-card>
                 <x-slot name="header">
@@ -35,7 +35,7 @@
     @endcan
 
     <!-- Kolom Kanan -->
-    @can('Dashboard Stok Produk')
+    @can('Stok Produk')
         <div class="col-md-6">
             <x-card>
                 <x-slot name="header">
@@ -70,7 +70,7 @@
     @endcan
 </div>
 
-@can('Dashboard Target Penjualan Karyawan')
+@can('Target Penjualan Karyawan')
     <!-- Target Penjualan Per Karyawan -->
     <div class="row mt-4">
         <div class="col-md-12">
