@@ -23,26 +23,19 @@ class DashboardController extends Controller
         // Ambil produk dengan stok kurang dari 10
         $produkKurangStok = Product::where('stok', '<', 10)->get();
 
-        $karyawan = new Karyawan(); // Membuat instance dari model Karyawan
-
-        // Hitung target penjualan per karyawan
-        $targetPenjualanPerKaryawan = $karyawan->hitungTargetPenjualan();
-
-        $tahun = 2024; // Tahun yang ingin Anda analisis
-
-        // Memanggil metode hitungTargetPenjualanPerBulan() dari instance model
+        $tahun = date('Y'); // Tahun yang ingin Anda analisis
+        $karyawan = new Karyawan();
         $targetPenjualanPerBulan = $karyawan->hitungTargetPenjualanPerBulan($tahun);
+        // dd($targetPenjualanPerBulan);
 
-        return view('dashboard.index', compact([
+        return view('dashboard.index', compact(
             'totalProduk',
             'totalKategori',
             'totalPelanggan',
             'totalKaryawan',
             'produkTerbaru',
             'produkKurangStok',
-            'targetPenjualanPerKaryawan',
-
             'targetPenjualanPerBulan'
-        ]));
+        ));
     }
 }

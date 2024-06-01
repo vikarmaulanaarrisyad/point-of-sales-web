@@ -36,7 +36,7 @@ class Karyawan extends Model
 
         // Loop melalui setiap karyawan
         foreach ($karyawan as $karyawan) {
-            $target = $karyawan->target_penjualan; // Sesuaikan dengan nama kolom target penjualan di tabel Karyawan
+            $target = $karyawan->target_penjualan_bulan; // Sesuaikan dengan nama kolom target penjualan di tabel Karyawan
             $penjualan = $karyawan->penjualan->sum('total_bayar'); // Sesuaikan dengan nama kolom total bayar di tabel Penjualan
 
             // Hitung target total dan penjualan total
@@ -64,44 +64,37 @@ class Karyawan extends Model
 
     public function hitungTargetPenjualanPerBulan($tahun)
     {
-        // Ambil semua data karyawan beserta target penjualan mereka
         $karyawan = Karyawan::with('penjualan')->get();
-
-        $targetTotal = 0;
-        $penjualanTotal = 0;
         $targetPerKaryawan = [];
 
-        // Loop melalui setiap karyawan
         foreach ($karyawan as $karyawan) {
             $targetPerBulan = [];
+
             for ($bulan = 1; $bulan <= 12; $bulan++) {
-                $target = $karyawan->target_penjualan; // Sesuaikan dengan nama kolom target penjualan di tabel Karyawan
+                $target = $karyawan->target_penjualan_bulan; // Kolom target penjualan per bulan
                 $penjualan = $karyawan->penjualan()
                     ->whereYear('created_at', $tahun)
                     ->whereMonth('created_at', $bulan)
-                    ->sum('total_bayar'); // Sesuaikan dengan nama kolom total bayar di tabel Penjualan
+                    ->sum('total_bayar');
 
-                $targetTotal += $target;
-                $penjualanTotal += $penjualan;
-
-                $targetPerBulan[$bulan] = [
-                    'target' => $target,
-                    'penjualan' => $penjualan,
-                    'selisih' => $target - $penjualan, // Selisih antara target dan penjualan
-                ];
+                // Hanya masukkan data jika ada penjualan atau persentase penjualan
+                if ($penjualan > 0 || $target != 0) {
+                    $persentase = $target != 0 ? ($penjualan / $target) * 100 : 0;
+                    $persentase = min($persentase, 100); // Batasi persentase maksimal 100%
+                    $persentase = floor($persentase); // Membulatkan ke bawah
+                    $targetPerBulan[$bulan] = [
+                        'target' => $target,
+                        'penjualan' => $penjualan,
+                        'persentase' => $persentase, // Hitung persentase dengan batasan 100%
+                    ];
+                }
             }
-            // Hitung target penjualan per karyawan per bulan
-            $targetPerKaryawan[$karyawan->nama_karyawan] = $targetPerBulan;
+
+            if (!empty($targetPerBulan)) {
+                $targetPerKaryawan[$karyawan->nama_karyawan] = $targetPerBulan;
+            }
         }
 
-        // Handle division by zero
-        $persentasePencapaian = $targetTotal != 0 ? ($penjualanTotal / $targetTotal) * 100 : 0;
-
-        return [
-            'target_total' => $targetTotal,
-            'penjualan_total' => $penjualanTotal,
-            'persentase_pencapaian' => $persentasePencapaian,
-            'target_per_karyawan_per_bulan' => $targetPerKaryawan,
-        ];
+        return $targetPerKaryawan;
     }
 }

@@ -77,7 +77,7 @@
             <x-card>
                 <x-slot name="header">
                     <h3 class="font-semibold text-gray-800 leading-tight">
-                        Target Penjualan Per Karyawan
+                        Target Penjualan Per Karyawan Per Bulan
                     </h3>
                 </x-slot>
                 <div class="card-body">
@@ -85,30 +85,26 @@
                         <thead>
                             <tr>
                                 <th>Nama Karyawan</th>
+                                <th>Bulan</th>
                                 <th>Target Penjualan</th>
                                 <th>Penjualan Tercapai</th>
                                 <th>Persentase</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Karyawan 1</td>
-                                <td>Rp. 10.000.000</td>
-                                <td>Rp. 7.500.000</td>
-                                <td>75%</td>
-                            </tr>
-                            <tr>
-                                <td>Karyawan 2</td>
-                                <td>Rp. 15.000.000</td>
-                                <td>Rp. 12.000.000</td>
-                                <td>80%</td>
-                            </tr>
-                            <tr>
-                                <td>Karyawan 3</td>
-                                <td>Rp. 20.000.000</td>
-                                <td>Rp. 15.000.000</td>
-                                <td>75%</td>
-                            </tr>
+                            @foreach ($targetPenjualanPerBulan as $namaKaryawan => $dataPerBulan)
+                                @foreach ($dataPerBulan as $bulan => $data)
+                                    @if ($data['penjualan'] > 0 || $data['persentase'] > 0)
+                                        <tr>
+                                            <td>{{ $namaKaryawan }}</td>
+                                            <td>{{ DateTime::createFromFormat('!m', $bulan)->format('F') }}</td>
+                                            <td>Rp. {{ number_format($data['target'], 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($data['penjualan'], 0, ',', '.') }}</td>
+                                            <td>{{ $data['persentase'] }}%</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -116,3 +112,63 @@
         </div>
     </div>
 @endcan
+
+
+
+{{--  @can('Target Penjualan Karyawan')
+    <!-- Target Penjualan Per Karyawan -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <x-card>
+                <x-slot name="header">
+                    <h3 class="font-semibold text-gray-800 leading-tight">
+                        Target Penjualan Per Karyawan Per Bulan
+                    </h3>
+                </x-slot>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nama Karyawan</th>
+                                <th>Bulan</th>
+                                <th>Target Penjualan</th>
+                                <th>Penjualan Tercapai</th>
+                                <th>Persentase</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($targetPenjualanPerBulan as $namaKaryawan => $dataPerBulan)
+                                @foreach ($dataPerBulan as $bulan => $data)
+                                    @if ($data['penjualan'] > 0 || $data['persentase'] > 0)
+                                        <tr>
+                                            <td>{{ $namaKaryawan }}</td>
+                                            <td>{{ DateTime::createFromFormat('!m', $bulan)->format('F') }}</td>
+                                            <td>Rp. {{ number_format($data['target'], 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($data['penjualan'], 0, ',', '.') }}</td>
+                                            <td>{{ number_format($data['persentase'], 2) }}%</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </x-card>
+        </div>
+    </div>
+@endcan  --}}
+
+
+@include('includes.datatable')
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".table").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+@endpush
