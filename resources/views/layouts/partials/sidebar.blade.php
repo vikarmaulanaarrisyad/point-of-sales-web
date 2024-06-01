@@ -108,21 +108,21 @@
                 {{--  @can('Transaksi Index')  --}}
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('penjualan.index') }}" class="nav-link">
                         <i class="fa fa-upload nav-icon"></i>
                         <p>
                             Penjualan
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{--  <li class="nav-item">
                     <a href="{{ route('transaksi.index') }}" class="nav-link">
                         <i class="fa fa-cart-arrow-down nav-icon"></i>
                         <p>
                             Transaksi Lama
                         </p>
                     </a>
-                </li>
+                </li>  --}}
                 <li class="nav-item">
                     <a href="{{ route('transaksi.baru') }}" class="nav-link">
                         <i class="fa fa-cart-arrow-down nav-icon"></i>

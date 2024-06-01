@@ -52,7 +52,7 @@
                                 <input type="hidden" name="product_id" id="product_id">
 
                                 <input id="barcode" class="form-control" type="text" name="barcode">
-                                
+
                                 <div class="input-group-append">
                                     <button onclick="tampilProduk()" class="btn btn-info btn-flat" type="button"><i
                                             class="fas fa-arrow-right"></i></button>
@@ -87,7 +87,7 @@
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
                             <input type="hidden" name="bayar" id="bayar">
-                            <input type="hidden" name="member" id="member">
+                            <input type="hidden" name="pelanggan" id="pelanggan">
 
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 col-md-2 col-2 control-label">Total</label>
