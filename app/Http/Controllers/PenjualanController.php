@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Product;
@@ -20,7 +21,23 @@ class PenjualanController extends Controller
 
     public function data()
     {
-        $query = Penjualan::with('pelanggan')->orderBy('id', 'desc');
+        $user = Auth::user(); // Mengambil objek pengguna yang sedang login
+
+        if ($user->hasRole('Karyawan')) {
+            $karyawan = Karyawan::where('user_id', $user->id)->first();
+            if ($karyawan) {
+                // Query untuk karyawan: hanya menampilkan penjualan yang dilakukan oleh karyawan yang login
+                $query = Penjualan::with('pelanggan', 'karyawan')
+                    ->where('karyawan_id', $karyawan->id)
+                    ->orderBy('id', 'desc');
+            } else {
+                // Jika karyawan tidak ditemukan, tidak menampilkan data apapun
+                $query = Penjualan::with('pelanggan', 'karyawan')->whereNull('id');
+            }
+        } else {
+            // Query untuk admin: menampilkan semua penjualan
+            $query = Penjualan::with('pelanggan', 'karyawan')->orderBy('id', 'desc');
+        }
 
         return datatables($query)
             ->addIndexColumn()
@@ -38,25 +55,27 @@ class PenjualanController extends Controller
             })
             ->addColumn('aksi', function ($query) {
                 return '
-                <div class="btn-group">
-                    <button onclick="showDetail(`' . route('penjualan.show', $query->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-eye"></i></button>
-                    <button onclick="deleteData(`' . route('penjualan.destroy', $query->id) . '`,`' . $query->kode_penjualan . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
-                ';
+            <div class="btn-group">
+                <button onclick="showDetail(`' . route('penjualan.show', $query->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-eye"></i></button>
+                <button onclick="deleteData(`' . route('penjualan.destroy', $query->id) . '`,`' . $query->kode_penjualan . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+            </div>
+            ';
             })
             ->escapeColumns([])
             ->make(true);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $karyawan = auth()->user()->karyawan->id ?? 1;
+        $user = auth()->user();
+        $karyawan = Karyawan::where('user_id', $user->id)->first();
 
         $penjualan = new Penjualan();
-        $penjualan->karyawan_id = $karyawan ?? 1;
+        $penjualan->karyawan_id = $karyawan->id;
         $penjualan->pelanggan_id = null;
         $penjualan->kode_penjualan = 'PJ-' . date('Ymd') . '-' . str_pad(Penjualan::count() + 1, 4, '0', STR_PAD_LEFT);
         $penjualan->total_item = 0;

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             SettingSeeder::class,
             JabatanTableSeeder::class,
-            KaryawanTableSeeder::class,
+            // KaryawanTableSeeder::class,
             PelangganTableSeeder::class,
             CategoryTableSeeder::class,
             SatuanTableSeeder::class,

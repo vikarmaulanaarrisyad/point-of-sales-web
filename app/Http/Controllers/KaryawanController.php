@@ -110,6 +110,8 @@ class KaryawanController extends Controller
             $user->password = Hash::make($request->nik_karyawan);
             $user->save();
 
+            $user->assignRole('Karyawan');
+
             $data = $request->except('photo', 'email');
             $data['target_penjualan_bulan'] = str_replace('.', '', $request->target_penjualan_bulan);
             $data['target_penjualan_harian'] = str_replace('.', '', $request->target_penjualan_harian);

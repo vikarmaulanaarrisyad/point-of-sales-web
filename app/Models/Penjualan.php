@@ -13,4 +13,8 @@ class Penjualan extends Model
     {
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id', 'id');
     }
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
+    }
 }

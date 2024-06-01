@@ -43,6 +43,55 @@
                     </li>
                 @endcan
 
+                @can('Konfigurasi Index')
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>
+                                Konfigurasi
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none">
+                            @can('User Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('Role Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('role.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Role</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('Permission Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('permission.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Permission</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('Group Permission Index')
+                                <li class="nav-item">
+                                    <a href="{{ route('permissiongroups.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Group Permission</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
+
                 @can('Master Data')
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -105,82 +154,31 @@
                     </li>
                 @endcan
 
-                {{--  @can('Transaksi Index')  --}}
-                <li class="nav-header">TRANSAKSI</li>
-                <li class="nav-item">
-                    <a href="{{ route('penjualan.index') }}" class="nav-link">
-                        <i class="fa fa-upload nav-icon"></i>
-                        <p>
-                            Penjualan
-                        </p>
-                    </a>
-                </li>
-                {{--  <li class="nav-item">
-                    <a href="{{ route('transaksi.index') }}" class="nav-link">
-                        <i class="fa fa-cart-arrow-down nav-icon"></i>
-                        <p>
-                            Transaksi Lama
-                        </p>
-                    </a>
-                </li>  --}}
-                <li class="nav-item">
-                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
-                        <i class="fa fa-cart-arrow-down nav-icon"></i>
-                        <p>
-                            Transaksi Baru
-                        </p>
-                    </a>
-                </li>
-                {{--  @endcan  --}}
-
-                @can('Konfigurasi Index')
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cog"></i>
-                            <p>
-                                Konfigurasi
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" style="display: none">
-                            @can('User Index')
-                                <li class="nav-item">
-                                    <a href="{{ route('users.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>User</p>
-                                    </a>
-                                </li>
-                            @endcan
-
-                            @can('Role Index')
-                                <li class="nav-item">
-                                    <a href="{{ route('role.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Role</p>
-                                    </a>
-                                </li>
-                            @endcan
-
-                            @can('Permission Index')
-                                <li class="nav-item">
-                                    <a href="{{ route('permission.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Permission</p>
-                                    </a>
-                                </li>
-                            @endcan
-
-                            @can('Group Permission Index')
-                                <li class="nav-item">
-                                    <a href="{{ route('permissiongroups.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Group Permission</p>
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
+                @can('Transaksi Index')
+                    <li class="nav-header">TRANSAKSI</li>
+                    @can('Penjualan Index')
+                        <li class="nav-item">
+                            <a href="{{ route('penjualan.index') }}" class="nav-link">
+                                <i class="fa fa-upload nav-icon"></i>
+                                <p>
+                                    Penjualan
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('Transaksi Baru')
+                        <li class="nav-item">
+                            <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                                <i class="fa fa-cart-arrow-down nav-icon"></i>
+                                <p>
+                                    Transaksi Baru
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                 @endcan
+
+
 
                 @can('Pengaturan Index')
                     <li class="nav-item">
