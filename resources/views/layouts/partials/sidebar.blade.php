@@ -178,8 +178,6 @@
                     @endcan
                 @endcan
 
-
-
                 @can('Pengaturan Index')
                     <li class="nav-item">
                         <a href="{{ route('setting.index') }}"
