@@ -3,7 +3,7 @@
         let table1, table2, table3;
         let modal = '#modal-form';
         let modalPelanggan = '.modal-pelanggan';
-        let modalTambahPelanggan = '.modal-tambah-pelangggan';
+        let modalTambahPelanggan = '.modal-tambah-pelanggan';
         let button = '#submitBtn';
 
         $(function() {
@@ -12,7 +12,7 @@
             $('body').addClass('sidebar-collapse');
             $('#nama_toko').prop('disabled', true);
             $('.btn-simpan').prop('disabled', true);
-            $('#tambahPelanggan').hide();
+            //$('#tambahPelanggan').hide();
         });
 
         $(document).on('input', '.quantity', function() {
@@ -170,6 +170,44 @@
             dom: 'Brt',
             bSort: false,
         });
+
+        table3 = $('.table-pelanggan').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            responsive: true,
+            language: {
+                "processing": "Mohon bersabar..."
+            },
+            ajax: {
+                url: '{{ route('transaksi.pelanggan') }}',
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'nama_toko',
+                },
+                {
+                    data: 'nama_pemilik',
+                },
+                {
+                    data: 'alamat',
+                },
+                {
+                    data: 'nomor_hp',
+                },
+                {
+                    data: 'aksi',
+                    sortable: false,
+                    searchable: false
+                },
+            ],
+            dom: 'Brt',
+            bSort: false,
+        });
     </script>
 
     <script>
@@ -226,6 +264,91 @@
         function hideProduk() {
             $(modal).modal('hide');
         }
+
+        function tampilPelanggan(title = 'Pilih Pelanggan') {
+            $(modalPelanggan).modal('show');
+            $(`${modalPelanggan} .modal-title`).text(title);
+        }
+
+        function tambaPelanggan(url, title = 'Form Tambah Pelanggan Baru') {
+            $(modalTambahPelanggan).modal('show');
+            $(`${modalTambahPelanggan} .modal-title`).text(title);
+            $(`${modalTambahPelanggan} form`).attr('action', url);
+            $(`${modalTambahPelanggan} [name=_method]`).val('POST');
+            $('#spinner-border').hide();
+
+            $(button).show();
+            $(button).prop('disabled', false);
+
+            resetForm(`${modal} form`);
+        }
+
+        function submitForm(originalForm) {
+            $(button).prop('disabled', true);
+            $('#spinner-border').show();
+
+            $.post({
+                    url: $(originalForm).attr('action'),
+                    data: new FormData(originalForm),
+                    dataType: 'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false
+                })
+                .done(response => {
+                    $(modalTambahPelanggan).modal('hide');
+                    if (response.status = 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        }).then(() => {
+                            $(button).prop('disabled', false);
+                            $('#spinner-border').hide();
+
+                            table3.ajax.reload();
+                        })
+                    }
+                })
+                .fail(errors => {
+                    $('#spinner-border').hide();
+                    $(button).prop('disabled', false);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Opps! Gagal',
+                        text: errors.responseJSON.message,
+                        showConfirmButton: true,
+                    });
+                    if (errors.status == 422) {
+                        $('#spinner-border').hide()
+                        $(button).prop('disabled', false);
+                        loopErrors(errors.responseJSON.errors);
+                        return;
+                    }
+                });
+        }
+
+
+        function resetPelanggan() {
+            $('#pelanggan').val('');
+            $('#nama_toko').val('');
+            $('#diterima').val(0).focus().select();
+            hidePelanggan();
+        }
+
+        function pilihPelanggan(id, kode) {
+            $('#pelanggan').val(id);
+            $('#nama_toko').val(kode);
+            $('#diterima').val(0).focus().select();
+            hidePelanggan();
+        }
+
+        function hidePelanggan() {
+            $(modalPelanggan).modal('hide');
+        }
+
 
         function deleteData(url, name) {
             const swalWithBootstrapButtons = Swal.mixin({
@@ -300,7 +423,7 @@
                     $('.tampil-terbilang').text(response.terbilang)
 
                     $('#kembali').val('Rp. ' + response.kembalirp);
-                    
+
                     if ($('#diterima').val() != 0) {
                         $('.tampil-bayar').text('Kembali: Rp. ' + response.kembalirp);
                         $('.tampil-terbilang').text(response.kembali_terbilang);

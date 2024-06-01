@@ -129,8 +129,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/transaksi/simpan', [PenjualanController::class, 'store'])->name('transaksi.simpan');
 
         Route::get('/transaksi/produk/data', [PenjualanDetailController::class, 'produk'])->name('penjualan_detail.produk');
-        Route::get('/transaksi/{id}/data', [PenjualanDetailController::class, 'data'])->name('transaksi.data');
         Route::get('/transaksi/pelanggan/data', [PenjualanDetailController::class, 'pelanggan'])->name('transaksi.pelanggan');
+        
+        Route::get('/transaksi/{id}/data', [PenjualanDetailController::class, 'data'])->name('transaksi.data');
         Route::get('/transaksi/loadform/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.loadform');
         Route::resource('/transaksi', PenjualanDetailController::class)->except('show');
     });

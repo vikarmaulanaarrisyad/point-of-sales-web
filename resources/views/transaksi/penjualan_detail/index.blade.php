@@ -102,7 +102,7 @@
                                         <input id="nama_toko" class="form-control" type="text"
                                             value="{{ $memberSelected->nama_toko }}">
                                         <div class="input-group-append" id="tambahPelanggan">
-                                            <button onclick="tambahPelanggan('{{ route('pelanggan.store') }}')"
+                                            <button onclick="tambaPelanggan('{{ route('pelanggan.store') }}')"
                                                 class="btn btn-info btn-flat" type="button"><i
                                                     class="fas fa-plus"></i></button>
                                         </div>
@@ -152,8 +152,8 @@
         </div>
     </div>
     @include('transaksi.penjualan_detail.produk')
-    {{--  @include('transaksi.penjualan_detail.member')  --}}
-    {{--  @include('transaksi.penjualan_detail.formTambahMember')  --}}
+    @include('transaksi.penjualan_detail.pelanggan')
+    @include('transaksi.penjualan_detail.form_pelanggan')
 @endsection
 
 @include('includes.datatable')

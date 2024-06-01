@@ -179,7 +179,7 @@ class PenjualanDetailController extends Controller
             })
             ->addColumn('aksi', function ($query) {
                 return '
-                    <button type="button" class="btn btn-sm btn-danger" onclick="pilihMember(`' . $query->id . '`,`' . $query->nama_toko . '`)"><i class="fas fa-check-circle"></i> Pilih</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="pilihPelanggan(`' . $query->id . '`,`' . $query->nama_toko . '`)"><i class="fas fa-check-circle"></i> Pilih</button>
                 ';
             })
             ->escapeColumns([])
