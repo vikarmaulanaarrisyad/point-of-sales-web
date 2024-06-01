@@ -10,11 +10,25 @@
                     </div>
                 </x-slot>
                 <div class="card-body">
-                    <ul>
-                        <li>Produk A - Harga: Rp. 100.000</li>
-                        <li>Produk B - Harga: Rp. 200.000</li>
-                        <li>Produk C - Harga: Rp. 300.000</li>
-                    </ul>
+                    <div class="col-lg-12">
+                        <x-table>
+                            <x-slot name="thead">
+                                <th>No</th>
+                                <th>Nama Produk</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                            </x-slot>
+
+                            @foreach ($produkTerbaru as $key => $produk)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <th>{{ $produk->nama_produk }}</th>
+                                    <th>{{ $produk->harga_jual }}</th>
+                                    <th>{{ $produk->stok }}</th>
+                                </tr>
+                            @endforeach
+                        </x-table>
+                    </div>
                 </div>
             </x-card>
         </div>
@@ -31,11 +45,25 @@
                     </div>
                 </x-slot>
                 <div class="card-body">
-                    <ul>
-                        <li>Produk X - Stok: 5</li>
-                        <li>Produk Y - Stok: 3</li>
-                        <li>Produk Z - Stok: 8</li>
-                    </ul>
+                    <div class="col-lg-12">
+                        <x-table>
+                            <x-slot name="thead">
+                                <th>No</th>
+                                <th>Nama Produk</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                            </x-slot>
+
+                            @foreach ($produkKurangStok as $key => $produk)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <th>{{ $produk->nama_produk }}</th>
+                                    <th>{{ $produk->harga_jual }}</th>
+                                    <th>{{ $produk->stok }}</th>
+                                </tr>
+                            @endforeach
+                        </x-table>
+                    </div>
                 </div>
             </x-card>
         </div>
