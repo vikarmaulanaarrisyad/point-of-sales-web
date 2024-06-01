@@ -19,6 +19,7 @@
                         <th>Total Item</th>
                         <th>Total Harga</th>
                         <th>Total Bayar</th>
+                        <th>Karyawan</th>
                         <th>Aksi</th>
                     </x-slot>
                 </x-table>

@@ -45,6 +45,9 @@
                     data: 'total_bayar',
                 },
                 {
+                    data: 'karyawan',
+                },
+                {
                     data: 'aksi',
                     searchable: false,
                     sortable: false

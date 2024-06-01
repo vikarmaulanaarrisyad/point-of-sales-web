@@ -53,6 +53,9 @@ class PenjualanController extends Controller
             ->editColumn('total_harga', function ($query) {
                 return format_uang($query->total_harga);
             })
+            ->editColumn('karyawan', function ($query) {
+                return $query->karyawan->nama_karyawan;
+            })
             ->addColumn('aksi', function ($query) {
                 return '
             <div class="btn-group">
