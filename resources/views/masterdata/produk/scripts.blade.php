@@ -115,8 +115,6 @@
                     resetForm(`${modal} form`);
                     loopForm(response.data);
 
-                    console.log(response.data);
-
                     var optionSatuan = new Option(response.data.satuan.name, response.data.satuan.id, true, true);
                     $('#satuan').append(optionSatuan).trigger('change');
 

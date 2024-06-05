@@ -20,6 +20,7 @@
         </div>
     </div>
     @includeIf('dashboard.small_box')
+    @includeIf('dashboard.grafik_chart')
     @includeIf('dashboard.produk_informasi')
     {{--  @include('dashboard.grafik_chart')  --}}
 @endsection

@@ -65,3 +65,35 @@
          </div>
      @endcan
  </div>
+
+
+ <div class="row">
+     @can('Total Penjualan Harian')
+         <div class="col-lg-6 col-6">
+             <div class="small-box bg-primary">
+                 <div class="inner">
+                     <h3>{{ format_uang($totalSalesToday) }}</h3> <!-- Contoh akses nilai untuk tanggal tertentu -->
+                     <p>Total Penjualan Harian</p>
+                 </div>
+                 <div class="icon">
+                     <i class="fas fa-shopping-cart"></i>
+                 </div>
+                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             </div>
+         </div>
+     @endcan
+     @can('Total Laba Harian')
+         <div class="col-lg-6 col-6">
+             <div class="small-box bg-secondary">
+                 <div class="inner">
+                     <h3>{{ format_uang($dailyProfit) }}</h3> <!-- Sesuaikan dengan variabel yang menyimpan laba perhari -->
+                     <p>Total Laba Harian</p>
+                 </div>
+                 <div class="icon">
+                     <i class="fas fa-dollar-sign"></i>
+                 </div>
+                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             </div>
+         </div>
+     @endcan
+ </div>
