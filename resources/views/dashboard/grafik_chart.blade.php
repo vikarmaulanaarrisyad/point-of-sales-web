@@ -31,6 +31,14 @@
         var monthlyProfitData = @json($monthlyProfits);
         var totalSalesPerMonthData = @json($totalSalesPerMonth);
 
+        // Format number as Indonesian Rupiah
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(number);
+        }
+
         // Fungsi untuk mengonversi nomor bulan menjadi nama bulan
         function getNamaBulan(nomorBulan) {
             const namaBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
@@ -67,6 +75,11 @@
                         title: {
                             display: true,
                             text: 'Rupiah'
+                        },
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return formatRupiah(value);
+                            }
                         }
                     },
                     x: {
@@ -78,7 +91,17 @@
                 },
                 tooltips: {
                     mode: 'index',
-                    intersect: false
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += formatRupiah(tooltipItem.yLabel);
+                            return label;
+                        }
+                    }
                 }
             }
         });
@@ -111,6 +134,11 @@
                         title: {
                             display: true,
                             text: 'Rupiah'
+                        },
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return formatRupiah(value);
+                            }
                         }
                     },
                     x: {
@@ -122,7 +150,17 @@
                 },
                 tooltips: {
                     mode: 'index',
-                    intersect: false
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += formatRupiah(tooltipItem.yLabel);
+                            return label;
+                        }
+                    }
                 }
             }
         });

@@ -62,7 +62,7 @@ class DashboardController extends Controller
                 ->sum('total_item') * Product::avg('harga_beli');
             $monthlyProfit = $totalSales - $totalCost;
 
-            $monthlyProfits[$month] = $monthlyProfit;
+            $monthlyProfits[$month] = round($monthlyProfit);
             $totalSalesPerMonth[$month] = $totalSales;
         }
 
