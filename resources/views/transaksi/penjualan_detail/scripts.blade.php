@@ -167,8 +167,6 @@
                     searchable: false
                 },
             ],
-            dom: 'Brt',
-            bSort: false,
         });
 
         table3 = $('.table-pelanggan').DataTable({
@@ -205,8 +203,6 @@
                     searchable: false
                 },
             ],
-            dom: 'Brt',
-            bSort: false,
         });
     </script>
 

@@ -11,6 +11,7 @@
                 <x-slot name="thead">
                     <th>No</th>
                     <th>Nama Toko</th>
+                    <th>Nama Pemilik</th>
                     <th>Alamat Member</th>
                     <th>Telepon</th>
                     <th>Aksi</th>
