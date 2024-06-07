@@ -11,8 +11,8 @@
             $('#spinner-border').hide();
         });
 
-        table = $('.table').DataTable({
-            processing: false,
+        table = $('.produk').DataTable({
+            processing: true,
             serverSide: true,
             autoWidth: false,
             responsive: true,
