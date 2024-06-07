@@ -48,7 +48,7 @@ function resetForm(selector) {
     $(".invalid-feedback").remove();
 }
 
-function loopForm(originalForm) {
+function loopForm1(originalForm) {
     for (field in originalForm) {
         if ($(`[name=${field}]`).attr("type") != "file") {
             if ($(`[name=${field}]`).hasClass("summernote")) {
@@ -66,6 +66,35 @@ function loopForm(originalForm) {
             }
 
             $("select").trigger("change");
+        } else {
+            $(`.preview-${field}`).attr("src", originalForm[field]).show();
+        }
+    }
+}
+
+function loopForm(originalForm) {
+    for (const field in originalForm) {
+        const $fieldElement = $(`[name=${field}]`);
+        const fieldType = $fieldElement.attr("type");
+
+        if (fieldType !== "file") {
+            if ($fieldElement.hasClass("summernote")) {
+                $fieldElement.summernote("code", originalForm[field]);
+            } else if (fieldType === "checkbox") {
+                $fieldElement
+                    .filter(`[value="${originalForm[field]}"]`)
+                    .prop("checked", true);
+            } else if (fieldType === "radio") {
+                $fieldElement
+                    .filter(`[value="${originalForm[field]}"]`)
+                    .prop("checked", true);
+            } else {
+                $fieldElement.val(originalForm[field]);
+            }
+
+            if ($fieldElement.is("select")) {
+                $fieldElement.trigger("change");
+            }
         } else {
             $(`.preview-${field}`).attr("src", originalForm[field]).show();
         }
