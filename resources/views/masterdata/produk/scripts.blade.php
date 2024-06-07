@@ -156,7 +156,7 @@
 
                     resetForm($modalForm);
 
-                    loopForm(data);
+                    //loopForm(data);
 
                     const optionSatuan = new Option(data.satuan.name, data.satuan.id, true, true);
                     $satuan.empty().append(optionSatuan).trigger('change');
