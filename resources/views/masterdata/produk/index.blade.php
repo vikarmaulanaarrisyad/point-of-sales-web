@@ -18,7 +18,7 @@
                     </x-slot>
                 @endcan
 
-                <x-table id="produk" class="produk" style="width: 100%">
+                <x-table class="produk" style="width: 100%">
                     <x-slot name="thead">
                         <th width="7%">No</th>
                         <th>Barcode</th>
