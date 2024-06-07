@@ -104,7 +104,7 @@
             resetForm(`${modal} form`);
         }
 
-        function editForm1(url, title = 'Form Edit Data Produk') {
+        function editForm(url, title = 'Form Edit Data Produk') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');
@@ -137,51 +137,6 @@
                     }
                 });
         }
-
-        function editForm(url, title = 'Form Edit Data Produk') {
-            const $modal = $(modal);
-            const $modalForm = $modal.find('form');
-            const $modalTitle = $modal.find('.modal-title');
-            const $satuan = $('#satuan');
-            const $kategori = $('#kategori');
-
-            $.get(url)
-                .done(response => {
-                    const data = response.data;
-
-                    $modal.modal('show');
-                    $modalTitle.text(title);
-                    $modalForm.attr('action', url);
-                    $modalForm.find('[name=_method]').val('put');
-
-                    resetForm($modalForm);
-
-                    loopForm(data);
-
-                    const optionSatuan = new Option(data.satuan.name, data.satuan.id, true, true);
-                    $satuan.empty().append(optionSatuan).trigger('change');
-
-                    const optionCategory = new Option(data.category.name, data.category.id, true, true);
-                    $kategori.empty().append(optionCategory).trigger('change');
-                })
-                .fail(errors => {
-                    $('#spinner-border').hide();
-                    $(button).prop('disabled', false);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops! Gagal',
-                        text: errors.responseJSON.message,
-                        showConfirmButton: true,
-                    });
-                    if (errors.status == 422) {
-                        $('#spinner-border').hide();
-                        $(button).prop('disabled', false);
-                        loopErrors(errors.responseJSON.errors);
-                    }
-                });
-        }
-
-
 
         function deleteData(url, name) {
             const swalWithBootstrapButtons = Swal.mixin({
