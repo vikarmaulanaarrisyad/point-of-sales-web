@@ -182,6 +182,7 @@
         }
 
 
+
         function deleteData(url, name) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {

@@ -20,6 +20,42 @@ class ProductController extends Controller
 
     public function data()
     {
+        $query = Product::with(['satuan', 'category'])->take(100)->get(); // Example limit
+
+        return datatables($query)
+            ->addIndexColumn()
+            ->editColumn('barcode', function ($query) {
+                return '<span class="badge badge-success">' . $query->barcode . '</span>';
+            })
+            ->editColumn('harga_beli', function ($query) {
+                return format_uang($query->harga_beli);
+            })
+            ->editColumn('harga_jual', function ($query) {
+                return format_uang($query->harga_jual);
+            })
+            ->editColumn('satuan', function ($query) {
+                return $query->satuan->name;
+            })
+            ->addColumn('action', function ($query) {
+                $aksi = '';
+                $user = Auth::user();
+
+                if ($user->can("Produk Edit")) {
+                    $aksi .= '<button onclick="editForm(`' . route('product.show', $query->id) . '`)" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>';
+                }
+                if ($user->can("Produk Delete")) {
+                    $aksi .= '<button onclick="deleteData(`' . route('product.destroy', $query->id) . '`, `' . $query->nama_produk . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>';
+                }
+
+                return $aksi;
+            })
+            ->escapeColumns([])
+            ->make(true);
+    }
+
+
+    public function data1()
+    {
         $query = Product::all();
 
         return datatables($query)
