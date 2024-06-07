@@ -103,14 +103,14 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product->satuan;
-        $product->category;
+        $product->load('satuan', 'category');
         $product->image = Storage::url($product->image);
         $product->harga_beli = format_uang($product->harga_beli);
         $product->harga_jual = format_uang($product->harga_jual);
 
         return response()->json(['data' => $product]);
     }
+
 
     /**
      * Update the specified resource in storage.
