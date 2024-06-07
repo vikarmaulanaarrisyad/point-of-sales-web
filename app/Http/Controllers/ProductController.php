@@ -20,12 +20,15 @@ class ProductController extends Controller
 
     public function data()
     {
-        $query = Product::with(['satuan', 'category'])->get();
+        $query = Product::all();
 
         return datatables($query)
             ->addIndexColumn()
             ->editColumn('barcode', function ($query) {
                 return '<span class="badge badge-success">' . $query->barcode . '</span>';
+            })
+            ->editColumn('image', function ($query) {
+                return '<img src="' . Storage::url($query->image) . '" width="100px">';
             })
             ->editColumn('harga_beli', function ($query) {
                 return format_uang($query->harga_beli);
