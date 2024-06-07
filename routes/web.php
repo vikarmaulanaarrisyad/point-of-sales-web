@@ -108,8 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/category', CategoryController::class)->except('create', 'edit');
     });
 
+    Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
     Route::group(['middleware' => ['permission:Produk Index']], function () {
-        Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
         Route::resource('/product', ProductController::class)->except('create', 'edit');
     });
 
