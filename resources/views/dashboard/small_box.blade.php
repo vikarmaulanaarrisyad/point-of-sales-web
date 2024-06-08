@@ -1,5 +1,4 @@
  <div class="row">
-
      @can('Total Produk')
          <div class="col-lg-3 col-6">
 
@@ -86,7 +85,8 @@
          <div class="col-lg-6 col-6">
              <div class="small-box bg-secondary">
                  <div class="inner">
-                     <h3>{{ format_uang($dailyProfit) }}</h3> <!-- Sesuaikan dengan variabel yang menyimpan laba perhari -->
+                     {{--  <h3>{{ format_uang($dailyProfit) }}</h3> <!-- Sesuaikan dengan variabel yang menyimpan laba perhari -->  --}}
+                     <h3>{{ format_uang($dailyProfit ?? 0) }}</h3>
                      <p>Total Laba Harian</p>
                  </div>
                  <div class="icon">

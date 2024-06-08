@@ -43,13 +43,14 @@ class ReportController extends Controller
                 return $detail->produk->stok;
             })
             ->addColumn('harga_pabrik', function ($detail) {
-                return $detail->produk->harga_beli;
+                return format_uang($detail->produk->harga_beli);
             })
             ->addColumn('harga_jual', function ($detail) {
-                return $detail->produk->harga_jual;
+                return format_uang($detail->produk->harga_jual);
             })
             ->addColumn('profit', function ($detail) {
-                return ($detail->subtotal - $detail->produk->harga_jual) * $detail->quantity;
+                // return ($detail->subtotal - $detail->produk->harga_jual) * $detail->quantity;
+                return format_uang($detail->produk->stok * ($detail->produk->harga_jual - $detail->produk->harga_beli));
             })
             ->rawColumns(['tanggal', 'product', 'stock', 'harga_pabrik', 'harga_jual', 'profit'])
             ->make(true);
