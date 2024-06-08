@@ -101,6 +101,7 @@ class PenjualanDetailController extends Controller
 
         // Buat detail baru
         $detail = new PenjualanDetail();
+        $detail->tanggal = date('Y-m-d');
         $detail->penjualan_id = $request->penjualan_id;
         $detail->product_id = $request->product_id;
         $detail->quantity = 1;
