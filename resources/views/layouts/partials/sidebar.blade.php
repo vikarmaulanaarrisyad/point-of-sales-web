@@ -178,30 +178,15 @@
                     @endcan
                 @endcan
 
-                @can('Laporan Index')
+                @can('Report Index')
                     <li class="nav-header">REPORT</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('report.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-file-pdf"></i>
                             <p>
-                                Laporan
-                                <i class="fas fa-angle-left right"></i>
+                                Report
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" style="display: none">
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Periode Hari</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Periode Bulan</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 @endcan
 

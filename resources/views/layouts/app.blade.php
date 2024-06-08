@@ -149,6 +149,14 @@
 
     <script src="{{ asset('/js/custom.js') }}"></script>
 
+
+    <script>
+        $(function() {
+            $('#spinner-border').hide();
+        });
+    </script>
+
+
     <x-toast />
     @stack('scripts')
 

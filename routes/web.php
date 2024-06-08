@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     PermissionController,
     PermissionGroupController,
     ProductController,
+    ReportController,
     RoleController,
     SatuanController,
     SettingController,
@@ -132,4 +133,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transaksi/loadform/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.loadform');
         Route::resource('/transaksi', PenjualanDetailController::class)->except('show');
     });
+
+    Route::get('/report/{start}/{end}', [ReportController::class, 'data'])->name('report.data');
+    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/pdf/{start}/{end}', [ReportController::class, 'exportPDF'])->name('report.export_pdf');
 });
