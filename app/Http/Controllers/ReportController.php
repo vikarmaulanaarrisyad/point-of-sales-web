@@ -27,7 +27,7 @@ class ReportController extends Controller
 
         $details = PenjualanDetail::with('produk', 'penjualan')
             ->whereHas('penjualan', function ($query) use ($start, $end) {
-                $query->whereBetween('created_at', [$start, $end]);
+                $query->whereBetween('tanggal', [$start, $end]);
             })
             ->get();
 
