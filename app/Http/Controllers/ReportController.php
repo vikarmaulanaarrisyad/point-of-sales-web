@@ -12,7 +12,7 @@ class ReportController extends Controller
         $start = now()->subDay(30)->format('Y-m-d');
         $end = now()->format('Y-m-d');
 
-        if ($request->has('start') && $request->has('end')) {
+        if ($request->has('start') && $request->start != "" && $request->has('end') && $request->end != "") {
             $start = $request->start;
             $end = $request->end;
         }
