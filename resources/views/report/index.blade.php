@@ -40,54 +40,50 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            let modal = '#modal-form';
+        let modal = '#modal-form';
+        let table;
 
-            $(".table").DataTable({
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    "url": "{{ route('report.data', ['start' => $start, 'end' => $end]) }}",
+        table = $('.table').DataTable({
+            processing: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('report.data', compact('start', 'end')) }}'
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
                 },
-                "columns": [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'tanggal',
-                        name: 'tanggal'
-                    },
-                    {
-                        data: 'product',
-                        name: 'product'
-                    },
-                    {
-                        data: 'stock',
-                        name: 'stock'
-                    },
-                    {
-                        data: 'harga_pabrik',
-                        name: 'harga_pabrik'
-                    },
-                    {
-                        data: 'harga_jual',
-                        name: 'harga_jual'
-                    },
-                    {
-                        data: 'profit',
-                        name: 'profit'
-                    },
-                ],
-                "paginate": false,
-                "info": false,
-                "searching": false,
-                "order": []
-            });
+                {
+                    data: 'tanggal',
+                    name: 'tanggal'
+                },
+                {
+                    data: 'product',
+                    name: 'product'
+                },
+                {
+                    data: 'stock',
+                    name: 'stock'
+                },
+                {
+                    data: 'harga_pabrik',
+                    name: 'harga_pabrik'
+                },
+                {
+                    data: 'harga_jual',
+                    name: 'harga_jual'
+                },
+                {
+                    data: 'profit',
+                    name: 'profit'
+                },
+            ],
+            paginate: false,
+            searching: false,
+            bInfo: false,
+            order: []
         });
     </script>
 @endpush
