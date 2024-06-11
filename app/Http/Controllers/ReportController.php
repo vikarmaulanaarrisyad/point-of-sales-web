@@ -25,32 +25,30 @@ class ReportController extends Controller
         $start = $request->start;
         $end = $request->end;
 
-        $details = PenjualanDetail::with('produk', 'penjualan')
-            ->whereHas('penjualan', function ($query) use ($start, $end) {
-                $query->whereBetween('tanggal', [$start, $end]);
-            })
+        $query = PenjualanDetail::with('produk', 'penjualan')
+            ->whereBetween('tanggal', [$start, $end])
             ->get();
 
-        return datatables()->of($details)
+        return datatables($query)
             ->addIndexColumn()
-            ->addColumn('tanggal', function ($detail) {
-                return tanggal_indonesia($detail->penjualan->created_at, false, true);
+            ->addColumn('tanggal', function ($query) {
+                return tanggal_indonesia($query->tanggal);
             })
-            ->addColumn('product', function ($detail) {
-                return $detail->produk->nama_produk;
+            ->addColumn('product', function ($query) {
+                return $query->produk->nama_produk;
             })
-            ->addColumn('stock', function ($detail) {
-                return $detail->produk->stok;
+            ->addColumn('stock', function ($query) {
+                return $query->produk->stok;
             })
-            ->addColumn('harga_pabrik', function ($detail) {
-                return format_uang($detail->produk->harga_beli);
+            ->addColumn('harga_pabrik', function ($query) {
+                return format_uang($query->produk->harga_beli);
             })
-            ->addColumn('harga_jual', function ($detail) {
-                return format_uang($detail->produk->harga_jual);
+            ->addColumn('harga_jual', function ($query) {
+                return format_uang($query->produk->harga_jual);
             })
-            ->addColumn('profit', function ($detail) {
-                // return ($detail->subtotal - $detail->produk->harga_jual) * $detail->quantity;
-                return format_uang($detail->produk->stok * ($detail->produk->harga_jual - $detail->produk->harga_beli));
+            ->addColumn('profit', function ($query) {
+                // return ($query->subtotal - $query->produk->harga_jual) * $query->quantity;
+                return format_uang($query->produk->stok * ($query->produk->harga_jual - $query->produk->harga_beli));
             })
             ->rawColumns(['tanggal', 'product', 'stock', 'harga_pabrik', 'harga_jual', 'profit'])
             ->make(true);
