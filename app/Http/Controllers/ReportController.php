@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PenjualanDetail;
+use Carbon\Carbon;
+
 
 class ReportController extends Controller
 {
@@ -22,8 +24,8 @@ class ReportController extends Controller
 
     public function data(Request $request)
     {
-        $start = $request->start;
-        $end = $request->end;
+        $start = Carbon::parse($request->start)->format('Y-m-d');
+        $end = Carbon::parse($request->end)->format('Y-m-d');
 
         $query = PenjualanDetail::with('produk', 'penjualan')
             ->whereBetween('tanggal', [$start, $end])
