@@ -167,7 +167,6 @@ class DashboardController extends Controller
         $yearlyProfit = $totalSalesPerYear - $totalCostPerYear;
 
         $totalSalesToday = Penjualan::whereDate('created_at', $endDate)->sum('total_harga');
-
         return view('dashboard.index', compact(
             'totalProduk',
             'totalKategori',
@@ -182,7 +181,8 @@ class DashboardController extends Controller
             'totalSalesPerMonth',
             'totalSalesToday',
             'totalSalesPerYear',
-            'yearlyProfit'
+            'yearlyProfit',
+            'dailyProfit'
         ));
     }
 }
