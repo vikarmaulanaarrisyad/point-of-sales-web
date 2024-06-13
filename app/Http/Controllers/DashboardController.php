@@ -83,6 +83,13 @@ class DashboardController extends Controller
             $totalSalesPerDay[$formattedDate] = $totalSales;
         }
 
+        // Calculate yearly profit and total sales per year
+        $totalSalesPerYear = Penjualan::whereYear('created_at', $currentYear)->sum('total_harga');
+        $totalCostPerYear = Penjualan::whereYear('created_at', $currentYear)->sum('total_item') * Product::avg('harga_beli');
+        $yearlyProfit = $totalSalesPerYear - $totalCostPerYear;
+
+        $totalSalesToday = Penjualan::whereDate('created_at', $endDate)->sum('total_harga');
+
         return view('dashboard.index', compact(
             'totalProduk',
             'totalKategori',
@@ -96,7 +103,9 @@ class DashboardController extends Controller
             'totalSalesPerDay',
             'monthlyProfits',
             'totalSalesPerMonth',
-            'totalSalesToday'
+            'totalSalesToday',
+            'totalSalesPerYear',
+            'yearlyProfit'
         ));
     }
 }

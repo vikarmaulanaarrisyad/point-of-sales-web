@@ -74,7 +74,6 @@
                 <div class="icon">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     @endcan
@@ -88,7 +87,36 @@
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    @endcan
+</div>
+
+
+<div class="row">
+    @can('Total Penjualan Perbulan')
+        <div class="col-lg-6 col-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ format_uang($totalSalesPerYear) }}</h3>
+                    <p>Total Penjualan Perbulan</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+        </div>
+    @endcan
+    @can('Total Laba Perbulan')
+        <div class="col-lg-6 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ format_uang($dailyProfit ?? 0) }}</h3>
+                    <p>Total Laba Perbulan</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
             </div>
         </div>
     @endcan
