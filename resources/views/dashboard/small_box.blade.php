@@ -62,7 +62,6 @@
     @endcan
 </div>
 
-
 <div class="row">
     @can('Total Penjualan Harian')
         <div class="col-lg-6 col-6">
@@ -92,13 +91,12 @@
     @endcan
 </div>
 
-
 <div class="row">
     @can('Total Penjualan Perbulan')
         <div class="col-lg-6 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>{{ format_uang($totalSalesPerYear) }}</h3>
+                    <h3>{{ format_uang(array_sum($totalSalesPerMonth)) }}</h3>
                     <p>Total Penjualan Perbulan</p>
                 </div>
                 <div class="icon">
@@ -111,8 +109,37 @@
         <div class="col-lg-6 col-6">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>{{ format_uang($dailyProfit ?? 0) }}</h3>
+                    <h3>{{ format_uang(array_sum($monthlyProfits)) }}</h3>
                     <p>Total Laba Perbulan</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+    @endcan
+</div>
+
+<div class="row">
+    @can('Total Penjualan Pertahun')
+        <div class="col-lg-6 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ format_uang($totalSalesPerYear) }}</h3>
+                    <p>Total Penjualan Pertahun</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+        </div>
+    @endcan
+    @can('Total Laba Pertahun')
+        <div class="col-lg-6 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ format_uang($yearlyProfit) }}</h3>
+                    <p>Total Laba Pertahun</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
