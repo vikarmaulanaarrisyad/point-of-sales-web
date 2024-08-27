@@ -313,8 +313,63 @@ class PermissionTableSeeder extends Seeder
                 'permission_group_id' => PermissionGroup::where('name', 'Pengaturan')->first()->id,
             ],
 
-
-
+            // GRAFIK
+            [
+                'name' => 'Grafik Chart Penjualan',
+                'permission_group_id' => PermissionGroup::where('name', 'Grafik')->first()->id,
+            ],
+            [
+                'name' => 'Total Produk',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Kategori',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Pelanggan',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Karyawan',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Penjualan Harian',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Laba Harian',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Penjualan Perbulan',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Laba Perbulan',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Penjualan Pertahun',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Total Laba Pertahun',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Produk Terbaru',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Stok Produk',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Target Penjualan Karyawan',
+                'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
         ];
 
         foreach ($permissions as $value) {

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class KaryawanController extends Controller
 {
@@ -110,6 +111,11 @@ class KaryawanController extends Controller
             $user->password = Hash::make($request->nik_karyawan);
             $user->save();
 
+            $role = Role::where('name', 'Karyawan')->first();
+            if (!$role) {
+                Role::create(['name' => 'Karyawan']);
+                $user->assignRole('Karyawan');
+            }
             $user->assignRole('Karyawan');
 
             $data = $request->except('photo', 'email');

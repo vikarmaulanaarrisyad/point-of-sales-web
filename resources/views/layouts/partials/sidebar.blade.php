@@ -156,7 +156,7 @@
 
                 @can('Transaksi Index')
                     <li class="nav-header">TRANSAKSI</li>
-                    @can('Penjualan Index')
+                    @can('Transaksi Index')
                         <li class="nav-item">
                             <a href="{{ route('penjualan.index') }}" class="nav-link">
                                 <i class="fa fa-upload nav-icon"></i>

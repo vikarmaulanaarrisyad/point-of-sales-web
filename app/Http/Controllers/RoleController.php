@@ -126,6 +126,11 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+        $user = Auth::user();
+        $user->hasAllRoles(Role::all());
+        if ($user->hasRole($role->name)) {
+            return response()->json(['message' => 'Maaf, Anda tidak memiliki izin untuk menghapus role ini'], 403);
+        }
         $role->syncPermissions();
         $role->delete();
 

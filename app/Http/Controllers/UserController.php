@@ -169,6 +169,12 @@ class UserController extends Controller
 
     public function destroy(Request $request, User $users)
     {
+        if ($users->id == Auth::user()->id) {
+            return response()->json([
+                'message' => 'Maaf, Anda tidak dapat menghapus diri sendiri'
+            ], 422);
+        }
+
         $users->delete();
 
         return response()->json([
