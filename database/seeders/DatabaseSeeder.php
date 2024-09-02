@@ -15,14 +15,14 @@ class DatabaseSeeder extends Seeder
             PermissionGroupTableSeeder::class,
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
-            UserTableSeeder::class,
-            SettingSeeder::class,
-            JabatanTableSeeder::class,
+            // UserTableSeeder::class,
+            // SettingSeeder::class,
+            // JabatanTableSeeder::class,
             // KaryawanTableSeeder::class,
-            PelangganTableSeeder::class,
-            CategoryTableSeeder::class,
-            SatuanTableSeeder::class,
-            ProdukTableSeeder::class,
+            // PelangganTableSeeder::class,
+            // CategoryTableSeeder::class,
+            // SatuanTableSeeder::class,
+            // ProdukTableSeeder::class,
         ]);
     }
 }
