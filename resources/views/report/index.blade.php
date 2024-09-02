@@ -15,6 +15,8 @@
                     <button onclick="" data-toggle="modal" data-target="#modal-form" class="btn btn-sm btn-primary">
                         <i class="fas fa-pencil-alt"></i> Ubah Periode
                     </button>
+                    <a target="_blank" href="{{ route('report.export_pdf', compact('start', 'end')) }}"
+                        class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</a>
                 </x-slot>
 
                 <x-table>
