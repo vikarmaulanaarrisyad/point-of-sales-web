@@ -288,6 +288,10 @@ class PermissionTableSeeder extends Seeder
                 'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
             ],
             [
+                'name' => 'Transaksi Baru',
+                'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
+            ],
+            [
                 'name' => 'Transaksi Store',
                 'permission_group_id' => PermissionGroup::where('name', 'Transaksi')->first()->id,
             ],
@@ -369,6 +373,10 @@ class PermissionTableSeeder extends Seeder
             [
                 'name' => 'Target Penjualan Karyawan',
                 'permission_group_id' => PermissionGroup::where('name', 'Dashboard')->first()->id,
+            ],
+            [
+                'name' => 'Report Index',
+                'permission_group_id' => PermissionGroup::where('name', 'Report')->first()->id,
             ],
         ];
 

@@ -24,7 +24,6 @@
                         <th width="5%">No</th>
                         <th>Tanggal</th>
                         <th>Produk</th>
-                        <th>Stok</th>
                         <th>Harga Pabrik</th>
                         <th>Harga Jual</th>
                         <th>Laba</th>
@@ -64,10 +63,6 @@
                 {
                     data: 'product',
                     name: 'product'
-                },
-                {
-                    data: 'stock',
-                    name: 'stock'
                 },
                 {
                     data: 'harga_pabrik',

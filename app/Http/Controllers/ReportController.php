@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PembelianDetail;
 use Illuminate\Http\Request;
 use App\Models\PenjualanDetail;
 use App\Models\Product;
@@ -84,54 +85,116 @@ class ReportController extends Controller
         return $dompdf->stream('laporan-penjualan.pdf', ["Attachment" => false]);
     }
 
-    public function exportPDF(Request $request)
+    public function exportPDF2(Request $request)
     {
-        // Ambil data dari periode yang dipilih
-        $start = Carbon::parse($request->start)->format('Y-m-d');
-        $end = Carbon::parse($request->end)->format('Y-m-d');
+        // Parsing tanggal
+        $start = Carbon::parse($request->start)->startOfDay();
+        $end = Carbon::parse($request->end)->endOfDay();
 
         // Hitung stok awal
-        $stokAwal = Product::with(['pembelian', 'penjualan'])
-            ->selectRaw('SUM(pembelian.quantity) - SUM(penjualan.quantity) as stok_awal')
-            ->where('tanggal', '<', $start)
-            ->first()
-            ->stok_awal;
+        $stokAwal = PembelianDetail::where('created_at', '<', $start)->sum('jumlah') -
+            PenjualanDetail::where('created_at', '<', $start)->sum('quantity');
 
-        // Hitung stok masuk dan keluar selama periode
-        $stokMasuk = Product::with('pembelian')
-            ->selectRaw('SUM(pembelian.quantity) as total_masuk')
-            ->whereBetween('tanggal', [$start, $end])
-            ->first()
-            ->total_masuk;
+        // Hitung stok masuk selama periode
+        $stokMasuk = PembelianDetail::whereBetween('created_at', [$start, $end])->sum('jumlah');
 
-        $stokKeluar = Product::with('penjualan')
-            ->selectRaw('SUM(penjualan.quantity) as total_keluar')
-            ->whereBetween('tanggal', [$start, $end])
-            ->first()
-            ->total_keluar;
+        // Hitung stok keluar selama periode
+        $stokKeluar = PenjualanDetail::whereBetween('created_at', [$start, $end])->sum('quantity');
 
         // Hitung stok akhir
         $stokAkhir = $stokAwal + $stokMasuk - $stokKeluar;
 
-        // Ambil data penjualan selama periode
-        $data = PenjualanDetail::with('produk', 'penjualan')
-            ->whereBetween('tanggal', [$start, $end])
+        // Ambil data penjualan detail selama periode
+        $dataPenjualan = PenjualanDetail::with(['produk', 'penjualan'])
+            ->whereBetween('created_at', [$start, $end])
             ->get();
 
+        // Ambil data pembelian detail selama periode
+        $dataPembelian = PembelianDetail::with(['produk', 'pembelian'])
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+
+        // Siapkan data untuk view
+        $data = [
+            'start_date' => $start->toDateString(),
+            'end_date' => $end->toDateString(),
+            'stokAwal' => $stokAwal,
+            'stokMasuk' => $stokMasuk,
+            'stokKeluar' => $stokKeluar,
+            'stokAkhir' => $stokAkhir,
+            'dataPenjualan' => $dataPenjualan,
+            'dataPembelian' => $dataPembelian,
+        ];
+
         // Render HTML untuk view PDF
-        $html = view('report.pdf', compact('data', 'stokAwal', 'stokAkhir'))->render();
+        $html = view('report.pdf', $data)->render();
 
         // Inisialisasi Dompdf
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
 
-        // Setup ukuran dan orientasi kertas
+        // Mengatur orientasi dan ukuran kertas
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Menghasilkan dan mengunduh PDF
+        return $dompdf->download('laporan_stok_' . $start->toDateString() . '_sampai_' . $end->toDateString() . '.pdf');
+    }
+
+    public function exportPDF(Request $request)
+    {
+        // Parsing tanggal
+        $start = Carbon::parse($request->start)->startOfDay();
+        $end = Carbon::parse($request->end)->endOfDay();
+
+        // Hitung stok awal
+        $stokAwal = PembelianDetail::where('created_at', '<', $start)->sum('jumlah') -
+            PenjualanDetail::where('created_at', '<', $start)->sum('quantity');
+
+        // Hitung stok masuk selama periode
+        $stokMasuk = PembelianDetail::whereBetween('created_at', [$start, $end])->sum('jumlah');
+
+        // Hitung stok keluar selama periode
+        $stokKeluar = PenjualanDetail::whereBetween('created_at', [$start, $end])->sum('quantity');
+
+        // Hitung stok akhir
+        $stokAkhir = $stokAwal + $stokMasuk - $stokKeluar;
+
+        // Ambil data penjualan detail selama periode
+        $dataPenjualan = PenjualanDetail::with(['produk', 'penjualan'])
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+
+        // Ambil data pembelian detail selama periode
+        $dataPembelian = PembelianDetail::with(['produk', 'pembelian'])
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+
+        // Siapkan data untuk view
+        $data = [
+            'start_date' => $start->toDateString(),
+            'end_date' => $end->toDateString(),
+            'stokAwal' => $stokAwal,
+            'stokMasuk' => $stokMasuk,
+            'stokKeluar' => $stokKeluar,
+            'stokAkhir' => $stokAkhir,
+            'dataPenjualan' => $dataPenjualan,
+            'dataPembelian' => $dataPembelian,
+        ];
+
+        // Render HTML untuk view PDF
+        $html = view('report.pdf', $data);
+
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        // Mengatur orientasi dan ukuran kertas jika diperlukan
         $dompdf->setPaper('A4', 'landscape');
 
         // Render HTML menjadi PDF
         $dompdf->render();
 
-        // Hasilkan PDF ke browser tanpa mendownloadnya
-        return $dompdf->stream('laporan-penjualan.pdf', ["Attachment" => false]);
+        // Menghasilkan dan mengunduh PDF
+        return $dompdf->stream('laporan_penjualan_' . $start->toDateString() . '_sampai_' . $end->toDateString() . '.pdf');
     }
 }

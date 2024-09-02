@@ -81,8 +81,8 @@
 <body>
     <header>
         <h1>Laporan Penjualan</h1>
-        <p>Periode: {{ Carbon\Carbon::parse(request('start'))->format('d-m-Y') }} sampai
-            {{ Carbon\Carbon::parse(request('end'))->format('d-m-Y') }}</p>
+        <p>Periode: {{ \Carbon\Carbon::parse($start_date)->format('d-m-Y') }} sampai
+            {{ \Carbon\Carbon::parse($end_date)->format('d-m-Y') }}</p>
     </header>
 
     <table>
@@ -91,31 +91,27 @@
                 <th>No</th>
                 <th>Tanggal</th>
                 <th>Produk</th>
-                <th class="text-center">Stok Awal</th>
-                <th class="text-center">Stok Akhir</th>
-                <th class="text-center">Quantity</th>
+                <th class="text-center">Qty</th>
                 <th class="text-right">Harga</th>
                 <th class="text-right">Sub Total</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $item)
+            @foreach ($dataPenjualan as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ tanggal_indonesia($item->tanggal) }}</td>
+                    <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->produk->nama_produk }}</td>
-                    <td class="text-center">{{ $stokAwal }}</td>
-                    <td class="text-center">{{ $stokAkhir }}</td>
                     <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">{{ format_uang($item->price) }}</td>
-                    <td class="text-right">{{ format_uang($item->subtotal) }}</td>
+                    <td class="text-right">{{ number_format($item->price, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="5" class="text-right">Total</td>
-                <td class="text-right">{{ format_uang($data->sum('subtotal')) }}</td>
+                <td class="text-right">{{ number_format($dataPenjualan->sum('subtotal'), 0, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>

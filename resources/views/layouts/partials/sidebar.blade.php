@@ -153,16 +153,19 @@
                         </ul>
                     </li>
                 @endcan
-                <li class="nav-item">
-                    <a href="{{ route('pembelian.index') }}" class="nav-link">
-                        <i class="fa fa-download nav-icon"></i>
-                        <p>
-                            Pembelian
-                        </p>
-                    </a>
-                </li>
+
                 @can('Transaksi Index')
                     <li class="nav-header">TRANSAKSI</li>
+                    @can('Pembelian Index')
+                        <li class="nav-item">
+                            <a href="{{ route('pembelian.index') }}" class="nav-link">
+                                <i class="fa fa-download nav-icon"></i>
+                                <p>
+                                    Pembelian
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('Transaksi Index')
                         <li class="nav-item">
                             <a href="{{ route('penjualan.index') }}" class="nav-link">

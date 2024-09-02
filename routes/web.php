@@ -136,16 +136,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/transaksi', PenjualanDetailController::class)->except('show');
     });
 
-    Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
-    Route::resource('/pembelian', PembelianController::class);
+    Route::group(['middleware' => ['permission:Pembelian Index']], function () {
+        Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
+        Route::resource('/pembelian', PembelianController::class);
 
-    Route::get('/pembeliandetail/produk/data', [PembelianDetailController::class, 'produk'])->name('pembelian_detail.produk');
-    Route::get('/pembeliandetail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
-    Route::get('/pembeliandetail/loadform/{total}/{diterima}', [PembelianDetailController::class, 'loadForm'])->name('pembelian_detail.loadform');
-    Route::resource('/pembeliandetail', PembelianDetailController::class);
-
-    // Route::group(['middleware' => ['permission:Pembelian Index']], function () {
-    // });
+        Route::get('/pembeliandetail/produk/data', [PembelianDetailController::class, 'produk'])->name('pembelian_detail.produk');
+        Route::get('/pembeliandetail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
+        Route::get('/pembeliandetail/loadform/{total}/{diterima}', [PembelianDetailController::class, 'loadForm'])->name('pembelian_detail.loadform');
+        Route::resource('/pembeliandetail', PembelianDetailController::class);
+    });
 
     Route::get('/report/{start}/{end}', [ReportController::class, 'data'])->name('report.data');
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');

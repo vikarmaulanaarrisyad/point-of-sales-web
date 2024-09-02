@@ -145,7 +145,7 @@ class PembelianController extends Controller
         foreach ($detail as $item) {
             $product = Product::findOrfail($item->product_id);
             if ($product) {
-                $product->stok += $item->quantity;
+                $product->stok -= $item->jumlah;
                 $product->update();
             }
 

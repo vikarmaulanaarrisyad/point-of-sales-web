@@ -45,6 +45,9 @@ class PermissionGroupTableSeeder extends Seeder
                 'name' => 'Grafik'
             ],
             [
+                'name' => 'Report'
+            ],
+            [
                 'name' => 'Konfigurasi'
             ],
             [
